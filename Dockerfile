@@ -42,3 +42,4 @@ COPY --from=builder /app/BRMK557\ RM&IPR\ Textbook.pdf ./
 EXPOSE 5000
 
 CMD ["sh", "-c", "npm --prefix server run prisma:push && npm --prefix server run prisma:seed && node server/dist/index.js"]
+

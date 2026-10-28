@@ -1,0 +1,26 @@
+name: rm-ipr-test-game
+services:
+  - name: web
+    type: web
+    dockerfile:
+      dockerfile: Dockerfile
+    ports:
+      - port: 5000
+        path: /
+    routes:
+      - path: /
+        port: 5000
+    regions:
+      - sin
+      - fra
+    env:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "5000"
+      - key: JWT_SECRET
+        value: rm_ipr_vtu_super_secret_jwt_key_2026_jagadish_exam_portal
+      - key: ADMIN_EMAIL
+        value: sjagadish89772@gmail.com
+      - key: ADMIN_PASSWORD
+        value: Prathiksha@123
