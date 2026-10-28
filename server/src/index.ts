@@ -31,7 +31,8 @@ app.use(
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Health Check
+// Health Checks
+app.get('/health', (req, res) => res.status(200).send('OK'));
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'ONLINE',
@@ -80,7 +81,8 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
   });
 });
 
-app.listen(PORT, () => {
+const portNumber = Number(PORT) || 5000;
+app.listen(portNumber, '0.0.0.0', () => {
   console.log(`=======================================================`);
   console.log(` RM & IPR MCQ Assessment Server Running on Port ${PORT}`);
   console.log(` Health Check: http://localhost:${PORT}/api/health`);
