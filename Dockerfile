@@ -11,22 +11,9 @@ COPY server/package*.json ./server/
 COPY client/package*.json ./client/
 COPY prisma ./prisma/
 
-# Set build-time and run-time environment variables
-ENV NODE_ENV=production
-ENV PORT=5000
-ENV DATABASE_URL="file:/app/prisma/dev.db"
-ENV JWT_SECRET="rm-ipr-secure-secret-token-key-university-2026-vtu"
-ENV SESSION_SECRET="rm-ipr-session-crypto-salt-secure-hash-2026"
-ENV ADMIN_INITIAL_EMAIL="sjagadish89772@gmail.com"
-ENV ADMIN_INITIAL_PASSWORD="Prathiksha@123"
-ENV ADMIN_INITIAL_NAME="Jagadish S"
-
-# Create fallback .env files so Prisma CLI and Node automatically load them
-RUN echo 'DATABASE_URL="file:/app/prisma/dev.db"' > /app/.env && \
-    echo 'DATABASE_URL="file:/app/prisma/dev.db"' > /app/server/.env
-
-# Install dependencies for both client and server
-RUN npm run install:all
+# Install all dependencies including devDependencies (TypeScript, Vite, Tailwind)
+RUN npm --prefix server install --include=dev
+RUN npm --prefix client install --include=dev
 
 # Generate Prisma client for linux engine
 RUN npm --prefix server run prisma:generate
@@ -40,6 +27,16 @@ RUN npm --prefix server run build
 
 # Ensure database directory exists and is writable
 RUN mkdir -p /app/prisma && chmod 777 /app/prisma
+
+# Set production environment variables
+ENV NODE_ENV=production
+ENV PORT=5000
+ENV DATABASE_URL="file:/app/prisma/dev.db"
+ENV JWT_SECRET="rm-ipr-secure-secret-token-key-university-2026-vtu"
+ENV SESSION_SECRET="rm-ipr-session-crypto-salt-secure-hash-2026"
+ENV ADMIN_INITIAL_EMAIL="sjagadish89772@gmail.com"
+ENV ADMIN_INITIAL_PASSWORD="Prathiksha@123"
+ENV ADMIN_INITIAL_NAME="Jagadish S"
 
 EXPOSE 5000
 
