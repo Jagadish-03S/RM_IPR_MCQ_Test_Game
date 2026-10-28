@@ -48,7 +48,39 @@ studentRouter.post('/login', async (req, res: Response) => {
       }
     }
 
-    // Upsert Student
+    // Check if USN is already registered
+    const existingStudent = await prisma.student.findUnique({
+      where: { normalizedUsn }
+    });
+
+    if (existingStudent) {
+      // 1. Check for name mismatch
+      const cleanExisting = existingStudent.fullName.trim().toLowerCase().replace(/\s+/g, ' ');
+      const cleanEntered = fullName.trim().toLowerCase().replace(/\s+/g, ' ');
+
+      if (cleanExisting !== cleanEntered) {
+        return res.status(403).json({
+          error: `Access Denied: This University Seat Number (${existingStudent.usn}) is already registered under candidate "${existingStudent.fullName}". You cannot log in using a different name.`
+        });
+      }
+
+      // 2. Check if this USN has already completed/attended the assessment
+      const alreadyCompletedAttempt = await prisma.testAttempt.findFirst({
+        where: {
+          studentId: existingStudent.id,
+          status: 'COMPLETED'
+        }
+      });
+
+      if (alreadyCompletedAttempt) {
+        return res.status(403).json({
+          alreadyCompleted: true,
+          error: `Access Denied: Candidate ${existingStudent.fullName} (${existingStudent.usn}) has already attended and submitted this examination. Multiple attempts under the same USN are prohibited.`
+        });
+      }
+    }
+
+    // Upsert Student with matching verified identity
     const student = await prisma.student.upsert({
       where: { normalizedUsn },
       update: { fullName },

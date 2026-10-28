@@ -9,6 +9,7 @@ import { FinalResults } from './pages/FinalResults';
 import { AdminLogin } from './pages/AdminLogin';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { DownloadCentre } from './pages/DownloadCentre';
+import { DogCatPlayLounge } from './components/DogCatPlayLounge';
 
 export const App: React.FC = () => {
   return (
@@ -28,6 +29,7 @@ export const App: React.FC = () => {
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
+        <DogCatPlayLounge />
         <Footer />
       </div>
     </BrowserRouter>

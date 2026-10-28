@@ -320,6 +320,46 @@ adminRouter.post('/attempts/:id/reset', verifyAdminToken, async (req: Authentica
   }
 });
 
+// 7. DELETE CANDIDATE ATTEMPT & RECORD FROM DATABASE
+adminRouter.delete('/attempts/:id', verifyAdminToken, async (req: AuthenticatedAdminRequest, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const attempt = await prisma.testAttempt.findUnique({
+      where: { id },
+      include: { student: true }
+    });
+
+    if (!attempt) {
+      return res.status(404).json({ error: 'Attempt record not found.' });
+    }
+
+    const studentId = attempt.studentId;
+    const studentName = attempt.student.fullName;
+    const studentUsn = attempt.student.usn;
+
+    // Cascade delete responses, focus events, module attempts, and the attempt
+    await prisma.studentResponse.deleteMany({ where: { attemptId: id } });
+    await prisma.focusEvent.deleteMany({ where: { attemptId: id } });
+    await prisma.moduleAttempt.deleteMany({ where: { attemptId: id } });
+    await prisma.testAttempt.delete({ where: { id } });
+
+    // Clean up student identity if no attempts remain
+    const remainingAttempts = await prisma.testAttempt.count({ where: { studentId } });
+    if (remainingAttempts === 0) {
+      await prisma.student.delete({ where: { id: studentId } });
+    }
+
+    return res.json({
+      success: true,
+      message: `Candidate ${studentName} (${studentUsn}) was permanently deleted from the list.`
+    });
+  } catch (error) {
+    console.error('Error deleting candidate:', error);
+    return res.status(500).json({ error: 'Failed to delete candidate attempt record.' });
+  }
+});
+
 // 7. GET TEST CONFIGURATION
 adminRouter.get('/config', verifyAdminToken, async (req: AuthenticatedAdminRequest, res: Response) => {
   try {

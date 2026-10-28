@@ -45,6 +45,7 @@ export const adminApi = {
     api.get('/admin/attempts', { params }),
   getAttemptDetail: (id: string) => api.get(`/admin/attempts/${id}`),
   resetAttempt: (id: string) => api.post(`/admin/attempts/${id}/reset`),
+  deleteAttempt: (id: string) => api.delete(`/admin/attempts/${id}`),
   getConfig: () => api.get('/admin/config'),
   updateConfig: (data: any) => api.put('/admin/config', data)
 };

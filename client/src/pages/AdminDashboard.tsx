@@ -5,6 +5,7 @@ import {
   ShieldAlert,
   Search,
   RotateCcw,
+  Trash2,
   Download,
   Eye,
   X,
@@ -113,6 +114,28 @@ export const AdminDashboard: React.FC = () => {
       fetchDashboardData();
     } catch (err: any) {
       alert(err.response?.data?.error || 'Failed to reset attempt.');
+    }
+  };
+
+  // Delete Candidate Attempt / Record
+  const handleDeleteAttempt = async (id: string, studentName: string, usn?: string) => {
+    if (
+      !window.confirm(
+        `Are you sure you want to permanently delete candidate ${studentName} (${usn || ''}) from the list? All their attempt data, responses, and records will be deleted.`
+      )
+    ) {
+      return;
+    }
+
+    try {
+      await adminApi.deleteAttempt(id);
+      alert(`Candidate ${studentName} was permanently deleted from the list.`);
+      if (selectedAttemptId === id) {
+        setSelectedAttemptId(null);
+      }
+      fetchDashboardData();
+    } catch (err: any) {
+      alert(err.response?.data?.error || 'Failed to delete candidate.');
     }
   };
 
@@ -379,6 +402,14 @@ export const AdminDashboard: React.FC = () => {
                             title="Reset Attempt"
                           >
                             <RotateCcw className="w-4 h-4" />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteAttempt(att.id, att.student.fullName, att.student.usn)}
+                            className="p-1.5 text-rose-600 hover:bg-rose-50 rounded transition"
+                            title="Delete Candidate from List"
+                          >
+                            <Trash2 className="w-4 h-4" />
                           </button>
                         </td>
                       </tr>
@@ -747,19 +778,36 @@ export const AdminDashboard: React.FC = () => {
 
             {/* Modal Footer */}
             <div className="px-6 py-3 bg-slate-50 border-t border-slate-200 flex items-center justify-between shrink-0">
-              <button
-                type="button"
-                onClick={() =>
-                  handleResetAttempt(
-                    attemptDetail?.attempt?.id,
-                    attemptDetail?.attempt?.student?.fullName
-                  )
-                }
-                className="text-xs text-rose-600 hover:text-rose-700 font-semibold flex items-center space-x-1"
-              >
-                <RotateCcw className="w-3.5 h-3.5" />
-                <span>Reset This Attempt</span>
-              </button>
+              <div className="flex items-center space-x-4">
+                <button
+                  type="button"
+                  onClick={() =>
+                    handleResetAttempt(
+                      attemptDetail?.attempt?.id,
+                      attemptDetail?.attempt?.student?.fullName
+                    )
+                  }
+                  className="text-xs text-amber-600 hover:text-amber-700 font-semibold flex items-center space-x-1"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" />
+                  <span>Reset Attempt</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() =>
+                    handleDeleteAttempt(
+                      attemptDetail?.attempt?.id,
+                      attemptDetail?.attempt?.student?.fullName,
+                      attemptDetail?.attempt?.student?.usn
+                    )
+                  }
+                  className="text-xs text-rose-600 hover:text-rose-700 font-semibold flex items-center space-x-1"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  <span>Delete Candidate</span>
+                </button>
+              </div>
 
               <button
                 type="button"
