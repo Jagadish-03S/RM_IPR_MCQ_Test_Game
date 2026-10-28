@@ -3,8 +3,7 @@ builder = "DOCKERFILE"
 dockerfilePath = "Dockerfile"
 
 [deploy]
-startCommand = "sh -c 'export DATABASE_URL=\"${DATABASE_URL:-file:/app/prisma/dev.db}\"; export JWT_SECRET=\"${JWT_SECRET:-rm-ipr-secure-secret-token-key-university-2026-vtu}\"; npm --prefix server run prisma:push && node server/dist/seed.js && node server/dist/index.js'"
-healthcheckPath = "/api/health"
+healthcheckPath = "/health"
 healthcheckTimeout = 120
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 3

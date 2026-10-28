@@ -25,10 +25,11 @@ COPY . .
 RUN npm --prefix client run build
 RUN npm --prefix server run build
 
-# Ensure database directory exists and is writable
+# Ensure database directory exists and entrypoint script is executable
 RUN mkdir -p /app/prisma && chmod 777 /app/prisma
+RUN chmod +x /app/docker-entrypoint.sh
 
-# Set production environment variables
+# Default environment variables
 ENV NODE_ENV=production
 ENV PORT=5000
 ENV DATABASE_URL="file:/app/prisma/dev.db"
@@ -40,4 +41,4 @@ ENV ADMIN_INITIAL_NAME="Jagadish S"
 
 EXPOSE 5000
 
-CMD ["sh", "-c", "export DATABASE_URL=\"${DATABASE_URL:-file:/app/prisma/dev.db}\"; npm --prefix server run prisma:push && node server/dist/seed.js && node server/dist/index.js"]
+CMD ["/app/docker-entrypoint.sh"]
