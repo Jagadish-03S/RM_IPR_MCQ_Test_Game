@@ -40,9 +40,9 @@ export async function seedDatabase() {
   console.log('Test configuration configured:', testConfig.testTitle);
 
   // 2. Seed Initial Admin Account
-  const adminEmail = process.env.ADMIN_INITIAL_EMAIL || 'admin@university.ac.in';
-  const adminPassword = process.env.ADMIN_INITIAL_PASSWORD || 'Admin@RMIPR2026!';
-  const adminName = process.env.ADMIN_INITIAL_NAME || 'Chief Academic Examiner';
+  const adminEmail = process.env.ADMIN_INITIAL_EMAIL || 'sjagadish89772@gmail.com';
+  const adminPassword = process.env.ADMIN_INITIAL_PASSWORD || 'Prathiksha@123';
+  const adminName = process.env.ADMIN_INITIAL_NAME || 'Jagadish S';
 
   const salt = await bcrypt.genSalt(10);
   const passwordHash = await bcrypt.hash(adminPassword, salt);

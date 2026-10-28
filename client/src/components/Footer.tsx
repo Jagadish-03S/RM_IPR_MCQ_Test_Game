@@ -30,7 +30,7 @@ export const Footer: React.FC = () => {
 
             <div className="flex items-center space-x-3">
               <a
-                href="https://github.com/sjaga"
+                href="https://github.com/Jagadish-03S"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center space-x-1.5 text-slate-400 hover:text-white bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 px-3 py-1.5 rounded-lg transition"

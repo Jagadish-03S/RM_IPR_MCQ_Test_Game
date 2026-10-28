@@ -102,8 +102,8 @@ npm run client
 
 For academic examiners and evaluators:
 - **Portal URL**: `http://localhost:5173/admin/login`
-- **Email**: `admin@university.ac.in`
-- **Password**: `Admin@RMIPR2026!`
+- **Email**: `sjagadish89772@gmail.com`
+- **Password**: `Prathiksha@123`
 
 *(Note: Admin password hashes are securely generated via bcrypt with salt rounds of 10. You can change these credentials in `.env` or from the Admin Console.)*
 
@@ -194,7 +194,7 @@ RM_IPR_MCQ_Test_Game/
 ## 👨‍💻 Author & Developer
 
 **Designed & Developed by Jagadish S**
-- **GitHub**: [github.com/sjaga](https://github.com/sjaga)
+- **GitHub**: [github.com/Jagadish-03S](https://github.com/Jagadish-03S)
 - **Email**: [sjagadish89772@gmail.com](mailto:sjagadish89772@gmail.com)
 - **Institution**: Visvesvaraya Technological University (VTU)
 
