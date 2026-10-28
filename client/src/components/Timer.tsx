@@ -40,15 +40,15 @@ export const Timer: React.FC<TimerProps> = ({ initialMinutes, startedAt, onTimeE
 
   return (
     <div
-      className={`flex items-center space-x-1.5 px-3 py-1 rounded-md font-mono text-sm font-semibold border transition-colors ${
+      className={`flex items-center space-x-1.5 px-2.5 sm:px-3 py-1 rounded-xl font-mono text-xs sm:text-sm font-bold border transition-colors ${
         isUrgent
-          ? 'bg-rose-600 text-white border-rose-700 animate-pulse'
+          ? 'bg-rose-600 text-white border-rose-500 animate-pulse'
           : isCritical
-          ? 'bg-amber-100 text-amber-900 border-amber-300'
-          : 'bg-slate-100 text-slate-800 border-slate-300'
+          ? 'bg-amber-950/80 text-amber-300 border-amber-600/80'
+          : 'bg-slate-900/90 text-slate-200 border-slate-800'
       }`}
     >
-      <Clock className="w-4 h-4" />
+      <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-400" />
       <span>
         {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
       </span>

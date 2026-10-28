@@ -29,52 +29,52 @@ export const ModuleSubmitModal: React.FC<ModuleSubmitModalProps> = ({
   const unansweredCount = totalQuestions - answeredCount;
 
   return (
-    <div className="fixed inset-0 bg-slate-900/75 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden border border-slate-200 animate-in fade-in zoom-in-95 duration-150">
+    <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-4">
+      <div className="bg-slate-900 border border-slate-700/80 rounded-2xl sm:rounded-3xl shadow-2xl max-w-lg w-full overflow-hidden animate-in fade-in zoom-in-95 duration-150 text-white">
         {/* Header */}
-        <div className="bg-slate-900 text-white px-6 py-5 flex items-center space-x-3">
-          <div className="p-2 bg-blue-600/40 rounded-lg text-blue-300">
+        <div className="bg-slate-950/90 px-4 sm:px-6 py-4 border-b border-slate-800 flex items-center space-x-3">
+          <div className="p-2 bg-blue-600/30 rounded-xl text-blue-400 shrink-0">
             <Lock className="w-5 h-5" />
           </div>
-          <div>
-            <h3 className="font-bold text-base">
-              Submit Module {moduleId}: Final Confirmation
+          <div className="min-w-0">
+            <h3 className="font-extrabold text-sm sm:text-base truncate">
+              Submit Module {moduleId}: Confirmation
             </h3>
-            <p className="text-xs text-slate-400">{moduleTitle}</p>
+            <p className="text-[11px] sm:text-xs text-slate-400 truncate">{moduleTitle}</p>
           </div>
         </div>
 
         {/* Content */}
-        <div className="p-6">
-          <div className="grid grid-cols-2 gap-4 mb-5">
-            <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-center">
-              <CheckCircle className="w-5 h-5 text-emerald-600 mx-auto mb-1" />
-              <div className="text-2xl font-bold text-emerald-800">{answeredCount}</div>
-              <div className="text-xs text-emerald-600 font-medium">Answered</div>
+        <div className="p-4 sm:p-6 space-y-4">
+          <div className="grid grid-cols-2 gap-3">
+            <div className="bg-emerald-950/40 border border-emerald-800/60 rounded-xl p-3 sm:p-4 text-center">
+              <CheckCircle className="w-5 h-5 text-emerald-400 mx-auto mb-1" />
+              <div className="text-xl sm:text-2xl font-black text-emerald-300">{answeredCount}</div>
+              <div className="text-[11px] text-emerald-400 font-semibold">Answered</div>
             </div>
 
             <div
-              className={`rounded-xl p-4 text-center border ${
+              className={`rounded-xl p-3 sm:p-4 text-center border ${
                 unansweredCount > 0
-                  ? 'bg-amber-50 border-amber-300'
-                  : 'bg-slate-50 border-slate-200'
+                  ? 'bg-amber-950/40 border-amber-800/60'
+                  : 'bg-slate-800/50 border-slate-700'
               }`}
             >
               <AlertCircle
                 className={`w-5 h-5 mx-auto mb-1 ${
-                  unansweredCount > 0 ? 'text-amber-600' : 'text-slate-400'
+                  unansweredCount > 0 ? 'text-amber-400' : 'text-slate-400'
                 }`}
               />
               <div
-                className={`text-2xl font-bold ${
-                  unansweredCount > 0 ? 'text-amber-800' : 'text-slate-700'
+                className={`text-xl sm:text-2xl font-black ${
+                  unansweredCount > 0 ? 'text-amber-300' : 'text-slate-300'
                 }`}
               >
                 {unansweredCount}
               </div>
               <div
-                className={`text-xs font-medium ${
-                  unansweredCount > 0 ? 'text-amber-600' : 'text-slate-500'
+                className={`text-[11px] font-semibold ${
+                  unansweredCount > 0 ? 'text-amber-400' : 'text-slate-400'
                 }`}
               >
                 Unanswered
@@ -83,30 +83,32 @@ export const ModuleSubmitModal: React.FC<ModuleSubmitModalProps> = ({
           </div>
 
           {unansweredCount > 0 && (
-            <div className="mb-4 bg-amber-50 border-l-4 border-amber-500 p-3 text-xs text-amber-900 rounded-r">
-              <p className="font-semibold">You have {unansweredCount} unanswered question(s).</p>
-              <p>Unanswered questions receive 0 marks. You can return to answer them before submitting.</p>
+            <div className="bg-amber-950/50 border-l-4 border-amber-500 p-3 text-xs text-amber-200 rounded-r-xl">
+              <p className="font-bold">You have {unansweredCount} unanswered question(s).</p>
+              <p className="text-[11px] text-amber-300/90 mt-0.5">
+                Unanswered questions receive 0 marks. You can still return to answer them.
+              </p>
             </div>
           )}
 
-          <div className="bg-slate-50 border border-slate-200 rounded-lg p-3 text-xs text-slate-600 space-y-1 mb-6">
-            <p className="font-semibold text-slate-800">Please Note:</p>
-            <p>1. Once submitted, your answers for Module {moduleId} will be permanently locked.</p>
+          <div className="bg-slate-950/70 border border-slate-800 rounded-xl p-3 text-[11px] sm:text-xs text-slate-300 space-y-1">
+            <p className="font-bold text-white">Important Examination Rules:</p>
+            <p>1. Once submitted, answers for Module {moduleId} are locked permanently.</p>
             <p>
               2.{' '}
               {isFinalModule
-                ? 'This is the 5th and final module. Submitting will end the entire 100-mark test.'
-                : `After submission, Module ${moduleId + 1} will unlock immediately.`}
+                ? 'This is the 5th and final module. Submitting will calculate your final score.'
+                : `After submitting, Module ${moduleId + 1} will unlock immediately.`}
             </p>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex items-center justify-end space-x-3">
+          <div className="flex flex-col-reverse sm:flex-row items-center justify-end gap-2 sm:gap-3 pt-2">
             <button
               type="button"
               disabled={isSubmitting}
               onClick={onCancel}
-              className="px-4 py-2.5 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-100 text-sm font-medium transition"
+              className="w-full sm:w-auto px-4 py-2.5 rounded-xl border border-slate-700 bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 text-xs sm:text-sm font-semibold transition text-center"
             >
               Return to Review
             </button>
@@ -115,13 +117,13 @@ export const ModuleSubmitModal: React.FC<ModuleSubmitModalProps> = ({
               type="button"
               disabled={isSubmitting}
               onClick={onConfirm}
-              className="px-5 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold shadow transition flex items-center space-x-2"
+              className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs sm:text-sm font-bold shadow-lg shadow-blue-900/40 transition flex items-center justify-center space-x-2 active:scale-98"
             >
               {isSubmitting ? (
                 <span>Submitting Module...</span>
               ) : (
                 <>
-                  <span>{isFinalModule ? 'Submit Complete Assessment' : `Confirm & Submit Module ${moduleId}`}</span>
+                  <span>{isFinalModule ? 'Finish Complete Assessment' : `Confirm Submit Module ${moduleId}`}</span>
                   <ArrowRight className="w-4 h-4" />
                 </>
               )}
@@ -132,4 +134,3 @@ export const ModuleSubmitModal: React.FC<ModuleSubmitModalProps> = ({
     </div>
   );
 };
-

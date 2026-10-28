@@ -1,26 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, Sliders } from 'lucide-react';
 
 interface ShinchanScene {
   id: string;
   name: string;
-  tagline: string;
   src: string;
   fallbackSrc: string;
 }
 
 const SHINCHAN_SCENES: ShinchanScene[] = [
   {
-    id: 'shinchan-play-dance',
+    id: 'shinchan-playing',
     name: 'Shinchan Playing & Dancing',
-    tagline: 'Classic Crayon Shinchan happy dance & playtime',
     src: '/media/shinchan_playing.gif',
     fallbackSrc: 'https://media.tenor.com/Y-eAadlEHKkAAAAC/dancing-dance-moves.gif'
   },
   {
     id: 'shinchan-fun',
-    name: 'Shinchan Happy Vibes',
-    tagline: 'Shinchan enjoying playful cartoon fun',
+    name: 'Shinchan Joyful Vibes',
     src: '/media/shinchan_fun.gif',
     fallbackSrc: 'https://media.tenor.com/0SWq7XNGWOMAAAAC/shin-chan.gif'
   }
@@ -28,7 +25,7 @@ const SHINCHAN_SCENES: ShinchanScene[] = [
 
 export const ShinchanBackground: React.FC = () => {
   const [sceneIdx, setSceneIdx] = useState(0);
-  const [opacityMode, setOpacityMode] = useState<'subtle' | 'balanced' | 'vivid'>('balanced');
+  const [opacityMode, setOpacityMode] = useState<'subtle' | 'balanced' | 'vivid'>('subtle');
   const [showControls, setShowControls] = useState(false);
 
   useEffect(() => {
@@ -49,17 +46,16 @@ export const ShinchanBackground: React.FC = () => {
 
   const currentScene = SHINCHAN_SCENES[sceneIdx];
 
-  // Opacity styles for background
   const opacityClass =
     opacityMode === 'vivid'
-      ? 'opacity-60'
-      : opacityMode === 'subtle'
-      ? 'opacity-20'
-      : 'opacity-40';
+      ? 'opacity-40'
+      : opacityMode === 'balanced'
+      ? 'opacity-25'
+      : 'opacity-15';
 
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none">
-      {/* Cartoon Shinchan Playing GIF Background */}
+      {/* Background Animated Shinchan Playing GIF */}
       <div className="absolute inset-0 w-full h-full flex items-center justify-center">
         <img
           src={currentScene.src}
@@ -67,33 +63,32 @@ export const ShinchanBackground: React.FC = () => {
           onError={(e) => {
             (e.target as HTMLImageElement).src = currentScene.fallbackSrc;
           }}
-          className={`w-full h-full object-cover transition-opacity duration-700 ease-in-out ${opacityClass} filter contrast-110 saturate-115`}
+          className={`w-full h-full object-cover sm:object-contain transition-opacity duration-700 ease-in-out ${opacityClass} filter brightness-90 contrast-105`}
         />
-        {/* Ambient Dark Overlay for high UI contrast & readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/80" />
+        {/* Soft Modern Dark Gradient Layer */}
+        <div className="absolute inset-0 bg-slate-950/85 backdrop-blur-[1px]" />
       </div>
 
-      {/* Floating Ambient Controls (Bottom Left) */}
-      <div className="fixed bottom-4 left-4 z-40 pointer-events-auto">
+      {/* Minimalist Floating Controls (Bottom Left - subtle on mobile) */}
+      <div className="fixed bottom-3 left-3 z-30 pointer-events-auto">
         {!showControls ? (
           <button
             type="button"
             onClick={() => setShowControls(true)}
-            className="flex items-center space-x-2 bg-slate-900/90 hover:bg-slate-800 text-slate-200 hover:text-white px-3 py-1.5 rounded-full border border-slate-700/80 shadow-lg text-xs font-semibold backdrop-blur transition transform active:scale-95"
-            title="Adjust Shinchan Background"
+            className="flex items-center space-x-1.5 bg-slate-900/80 hover:bg-slate-800 text-slate-300 hover:text-white px-2.5 py-1.5 rounded-full border border-slate-800 shadow-md text-[11px] font-medium backdrop-blur transition active:scale-95"
+            title="Shinchan Animation Settings"
           >
-            <span className="text-sm">👦</span>
-            <span className="text-[11px] font-bold text-amber-400">Shinchan BG</span>
+            <span>👦</span>
+            <span className="hidden sm:inline">Shinchan Theme</span>
+            <Sliders className="w-3 h-3 text-slate-400" />
           </button>
         ) : (
-          <div className="bg-slate-900/95 border border-slate-700 rounded-2xl p-3 shadow-2xl backdrop-blur-md text-xs text-white space-y-2.5 max-w-xs animate-in fade-in slide-in-from-bottom-2 duration-200">
+          <div className="bg-slate-900/95 border border-slate-800 rounded-2xl p-3 shadow-2xl backdrop-blur-md text-xs text-white space-y-2 max-w-[260px] animate-in fade-in duration-150">
             <div className="flex items-center justify-between border-b border-slate-800 pb-1.5">
-              <div className="flex items-center space-x-1.5">
-                <span className="text-sm">👦🖍️</span>
-                <span className="font-extrabold text-amber-300 text-[11px] uppercase tracking-wider">
-                  Shinchan Background
-                </span>
-              </div>
+              <span className="font-bold text-amber-300 text-[11px] flex items-center space-x-1">
+                <span>👦</span>
+                <span>Shinchan Theme</span>
+              </span>
               <button
                 type="button"
                 onClick={() => setShowControls(false)}
@@ -103,63 +98,34 @@ export const ShinchanBackground: React.FC = () => {
               </button>
             </div>
 
-            <div>
-              <div className="text-[10px] text-slate-400 uppercase font-semibold">Scene:</div>
-              <div className="text-xs font-bold text-white truncate mt-0.5">
-                {currentScene.name}
-              </div>
-              <div className="text-[10px] text-amber-200/80 italic mt-0.5">
-                {currentScene.tagline}
-              </div>
-            </div>
-
-            {SHINCHAN_SCENES.length > 1 && (
+            <div className="flex items-center space-x-1.5">
               <button
                 type="button"
                 onClick={nextScene}
-                className="w-full flex items-center justify-center space-x-1.5 bg-gradient-to-r from-amber-600 to-rose-600 hover:from-amber-500 hover:to-rose-500 text-white font-bold py-1.5 px-2.5 rounded-xl text-[11px] shadow transition active:scale-95"
+                className="flex-1 flex items-center justify-center space-x-1 bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] font-medium py-1 px-2 rounded-lg border border-slate-700 transition"
               >
-                <Sparkles className="w-3 h-3" />
-                <span>Switch Shinchan Scene</span>
+                <Sparkles className="w-3 h-3 text-amber-400" />
+                <span>Next Animation</span>
               </button>
-            )}
+            </div>
 
-            <div className="border-t border-slate-800 pt-2 flex items-center justify-between">
-              <span className="text-[10px] text-slate-400 font-semibold uppercase">Visibility:</span>
-              <div className="flex items-center space-x-1 bg-slate-950 p-0.5 rounded-lg border border-slate-800 text-[10px]">
-                <button
-                  type="button"
-                  onClick={() => handleOpacityChange('subtle')}
-                  className={`px-2 py-0.5 rounded ${
-                    opacityMode === 'subtle'
-                      ? 'bg-amber-500 text-slate-950 font-bold'
-                      : 'text-slate-400 hover:text-white'
-                  }`}
-                >
-                  Subtle
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleOpacityChange('balanced')}
-                  className={`px-2 py-0.5 rounded ${
-                    opacityMode === 'balanced'
-                      ? 'bg-amber-500 text-slate-950 font-bold'
-                      : 'text-slate-400 hover:text-white'
-                  }`}
-                >
-                  Balanced
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleOpacityChange('vivid')}
-                  className={`px-2 py-0.5 rounded ${
-                    opacityMode === 'vivid'
-                      ? 'bg-amber-500 text-slate-950 font-bold'
-                      : 'text-slate-400 hover:text-white'
-                  }`}
-                >
-                  Vivid
-                </button>
+            <div className="flex items-center justify-between text-[10px] text-slate-400 pt-1">
+              <span>Theme Opacity:</span>
+              <div className="flex items-center space-x-1 bg-slate-950 p-0.5 rounded-lg border border-slate-800">
+                {(['subtle', 'balanced', 'vivid'] as const).map((m) => (
+                  <button
+                    key={m}
+                    type="button"
+                    onClick={() => handleOpacityChange(m)}
+                    className={`px-1.5 py-0.5 rounded capitalize ${
+                      opacityMode === m
+                        ? 'bg-blue-600 text-white font-bold'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    {m}
+                  </button>
+                ))}
               </div>
             </div>
           </div>

@@ -19,12 +19,17 @@ export async function verifyStudentSession(
   next: NextFunction
 ) {
   try {
+    let token: string | undefined;
     const authHeader = req.headers.authorization || (req.headers['x-session-token'] as string);
-    if (!authHeader) {
-      return res.status(401).json({ error: 'Missing student authentication session token.' });
+    if (authHeader) {
+      token = authHeader.startsWith('Bearer ') ? authHeader.slice(7).trim() : authHeader.trim();
+    } else if (req.query.token && typeof req.query.token === 'string') {
+      token = req.query.token.trim();
     }
 
-    const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7).trim() : authHeader.trim();
+    if (!token) {
+      return res.status(401).json({ error: 'Missing student authentication session token.' });
+    }
 
     const attempt = await prisma.testAttempt.findUnique({
       where: { sessionToken: token },
@@ -56,11 +61,18 @@ export async function verifyAdminToken(
 ) {
   try {
     const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return res.status(401).json({ error: 'Admin authorization header required.' });
+    let token: string | undefined;
+
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      token = authHeader.split(' ')[1];
+    } else if (req.query.token && typeof req.query.token === 'string') {
+      token = req.query.token.trim();
     }
 
-    const token = authHeader.split(' ')[1];
+    if (!token) {
+      return res.status(401).json({ error: 'Admin authorization header or token required.' });
+    }
+
     const decoded = jwt.verify(token, JWT_SECRET) as { id: string; email: string; role: string };
 
     const admin = await prisma.admin.findUnique({

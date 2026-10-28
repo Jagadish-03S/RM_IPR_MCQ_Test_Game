@@ -139,6 +139,41 @@ export const AdminDashboard: React.FC = () => {
     }
   };
 
+  // Secure Direct Admin Report Downloader
+  const handleDownloadReport = async (format: 'csv' | 'pdf' | 'docx') => {
+    const token = localStorage.getItem('rm_ipr_admin_token') || '';
+    const timestamp = new Date().toISOString().slice(0, 10);
+    const filename = `RM_IPR_Assessment_Report_${timestamp}.${format}`;
+
+    try {
+      const response = await fetch(
+        `/api/downloads/admin-report/${format}?token=${encodeURIComponent(token)}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || 'Failed to download report.');
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (err: any) {
+      alert(err.message || 'Error downloading administrator report.');
+    }
+  };
+
   // Save Config
   const handleSaveConfig = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -174,27 +209,27 @@ export const AdminDashboard: React.FC = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 space-y-8">
+    <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8 space-y-6 sm:space-y-8 relative z-10">
       {/* Top Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 sm:pb-4 border-b border-slate-700/80">
         <div>
-          <h1 className="text-2xl font-black text-slate-900 tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight">
             Examiner Assessment Dashboard
           </h1>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-slate-400 mt-0.5">
             VTU Course Code BRMK557 • Candidate Performance & Proctoring Audit
           </p>
         </div>
 
         {/* Navigation Tabs */}
-        <div className="flex items-center space-x-1.5 bg-slate-200/80 p-1 rounded-xl text-xs font-semibold">
+        <div className="flex items-center space-x-1.5 bg-slate-900/90 border border-slate-800 p-1 rounded-xl text-xs font-semibold overflow-x-auto no-scrollbar">
           <button
             type="button"
             onClick={() => setActiveTab('ATTEMPTS')}
-            className={`px-3 py-1.5 rounded-lg transition ${
+            className={`px-3 py-1.5 rounded-lg transition whitespace-nowrap ${
               activeTab === 'ATTEMPTS'
-                ? 'bg-white text-slate-900 shadow-sm'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-blue-600 text-white shadow-sm'
+                : 'text-slate-400 hover:text-white'
             }`}
           >
             Candidate Attempts
@@ -202,10 +237,10 @@ export const AdminDashboard: React.FC = () => {
           <button
             type="button"
             onClick={() => setActiveTab('REPORTS')}
-            className={`px-3 py-1.5 rounded-lg transition ${
+            className={`px-3 py-1.5 rounded-lg transition whitespace-nowrap ${
               activeTab === 'REPORTS'
-                ? 'bg-white text-slate-900 shadow-sm'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-blue-600 text-white shadow-sm'
+                : 'text-slate-400 hover:text-white'
             }`}
           >
             Consolidated Reports
@@ -213,10 +248,10 @@ export const AdminDashboard: React.FC = () => {
           <button
             type="button"
             onClick={() => setActiveTab('CONFIG')}
-            className={`px-3 py-1.5 rounded-lg transition ${
+            className={`px-3 py-1.5 rounded-lg transition whitespace-nowrap ${
               activeTab === 'CONFIG'
-                ? 'bg-white text-slate-900 shadow-sm'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-blue-600 text-white shadow-sm'
+                : 'text-slate-400 hover:text-white'
             }`}
           >
             Test Settings
@@ -445,13 +480,14 @@ export const AdminDashboard: React.FC = () => {
                   Full student marksheet compatible with Microsoft Excel, Google Sheets, or institutional ERPs.
                 </p>
               </div>
-              <a
-                href="/api/downloads/admin-report/csv"
-                className="mt-4 inline-flex items-center justify-center space-x-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold py-2.5 px-4 rounded-lg shadow-sm transition"
+              <button
+                type="button"
+                onClick={() => handleDownloadReport('csv')}
+                className="mt-4 inline-flex items-center justify-center space-x-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow-sm transition active:scale-98"
               >
                 <Download className="w-3.5 h-3.5" />
                 <span>Export CSV Report</span>
-              </a>
+              </button>
             </div>
 
             <div className="border border-slate-200 rounded-xl p-5 bg-slate-50 hover:bg-slate-100/60 transition flex flex-col justify-between">
@@ -464,13 +500,14 @@ export const AdminDashboard: React.FC = () => {
                   Formatted university assessment audit transcript with candidate ranks, marks, and proctoring log.
                 </p>
               </div>
-              <a
-                href="/api/downloads/admin-report/pdf"
-                className="mt-4 inline-flex items-center justify-center space-x-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold py-2.5 px-4 rounded-lg shadow-sm transition"
+              <button
+                type="button"
+                onClick={() => handleDownloadReport('pdf')}
+                className="mt-4 inline-flex items-center justify-center space-x-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow-sm transition active:scale-98"
               >
                 <Download className="w-3.5 h-3.5" />
                 <span>Download PDF Report</span>
-              </a>
+              </button>
             </div>
 
             <div className="border border-slate-200 rounded-xl p-5 bg-slate-50 hover:bg-slate-100/60 transition flex flex-col justify-between">
@@ -483,13 +520,14 @@ export const AdminDashboard: React.FC = () => {
                   Fully editable summary report formatted for departmental meeting minutes and academic reviews.
                 </p>
               </div>
-              <a
-                href="/api/downloads/admin-report/docx"
-                className="mt-4 inline-flex items-center justify-center space-x-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold py-2.5 px-4 rounded-lg shadow-sm transition"
+              <button
+                type="button"
+                onClick={() => handleDownloadReport('docx')}
+                className="mt-4 inline-flex items-center justify-center space-x-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow-sm transition active:scale-98"
               >
                 <Download className="w-3.5 h-3.5" />
                 <span>Download DOCX Report</span>
-              </a>
+              </button>
             </div>
           </div>
         </div>

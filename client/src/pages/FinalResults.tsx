@@ -144,89 +144,89 @@ export const FinalResults: React.FC = () => {
       </div>
 
       {/* Metrics Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
-        <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm text-center">
-          <div className="text-xs text-slate-500 uppercase tracking-wider font-semibold mb-1">
+      <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 sm:gap-4">
+        <div className="bg-slate-900/90 backdrop-blur-xl rounded-2xl p-4 sm:p-5 border border-slate-800 shadow-sm text-center">
+          <div className="text-[11px] sm:text-xs text-slate-400 uppercase tracking-wider font-semibold mb-1">
             Attempted
           </div>
-          <div className="text-2xl font-bold text-slate-900">{attempt?.totalAttempted}</div>
-          <div className="text-[11px] text-slate-400">out of 100 questions</div>
+          <div className="text-xl sm:text-2xl font-black text-white">{attempt?.totalAttempted}</div>
+          <div className="text-[10px] sm:text-[11px] text-slate-400">out of 100 questions</div>
         </div>
 
-        <div className="bg-white rounded-2xl p-5 border border-emerald-100 shadow-sm text-center">
-          <div className="text-xs text-emerald-600 uppercase tracking-wider font-semibold mb-1 flex items-center justify-center space-x-1">
+        <div className="bg-slate-900/90 backdrop-blur-xl rounded-2xl p-4 sm:p-5 border border-emerald-900/50 shadow-sm text-center">
+          <div className="text-[11px] sm:text-xs text-emerald-400 uppercase tracking-wider font-semibold mb-1 flex items-center justify-center space-x-1">
             <CheckCircle2 className="w-3.5 h-3.5" />
             <span>Correct</span>
           </div>
-          <div className="text-2xl font-bold text-emerald-700">{attempt?.totalCorrect}</div>
-          <div className="text-[11px] text-emerald-600">+1.0 mark each</div>
+          <div className="text-xl sm:text-2xl font-black text-emerald-400">{attempt?.totalCorrect}</div>
+          <div className="text-[10px] sm:text-[11px] text-emerald-500">+1.0 mark each</div>
         </div>
 
-        <div className="bg-white rounded-2xl p-5 border border-rose-100 shadow-sm text-center">
-          <div className="text-xs text-rose-600 uppercase tracking-wider font-semibold mb-1 flex items-center justify-center space-x-1">
+        <div className="bg-slate-900/90 backdrop-blur-xl rounded-2xl p-4 sm:p-5 border border-rose-900/50 shadow-sm text-center">
+          <div className="text-[11px] sm:text-xs text-rose-400 uppercase tracking-wider font-semibold mb-1 flex items-center justify-center space-x-1">
             <XCircle className="w-3.5 h-3.5" />
             <span>Incorrect</span>
           </div>
-          <div className="text-2xl font-bold text-rose-700">{attempt?.totalWrong}</div>
-          <div className="text-[11px] text-rose-500">0.0 marks penalty</div>
+          <div className="text-xl sm:text-2xl font-black text-rose-400">{attempt?.totalWrong}</div>
+          <div className="text-[10px] sm:text-[11px] text-rose-500">0.0 penalty</div>
         </div>
 
-        <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm text-center">
-          <div className="text-xs text-slate-500 uppercase tracking-wider font-semibold mb-1 flex items-center justify-center space-x-1">
+        <div className="bg-slate-900/90 backdrop-blur-xl rounded-2xl p-4 sm:p-5 border border-slate-800 shadow-sm text-center">
+          <div className="text-[11px] sm:text-xs text-slate-400 uppercase tracking-wider font-semibold mb-1 flex items-center justify-center space-x-1">
             <HelpCircle className="w-3.5 h-3.5" />
             <span>Unanswered</span>
           </div>
-          <div className="text-2xl font-bold text-slate-700">{attempt?.totalUnanswered}</div>
-          <div className="text-[11px] text-slate-400">0.0 marks</div>
+          <div className="text-xl sm:text-2xl font-black text-slate-300">{attempt?.totalUnanswered}</div>
+          <div className="text-[10px] sm:text-[11px] text-slate-400">0.0 marks</div>
         </div>
 
-        <div className="bg-white rounded-2xl p-5 border border-amber-200 shadow-sm text-center col-span-2 sm:col-span-1">
-          <div className="text-xs text-amber-700 uppercase tracking-wider font-semibold mb-1 flex items-center justify-center space-x-1">
-            <ShieldAlert className="w-3.5 h-3.5 text-amber-600" />
+        <div className="bg-slate-900/90 backdrop-blur-xl rounded-2xl p-4 sm:p-5 border border-amber-900/50 shadow-sm text-center col-span-2 sm:col-span-1">
+          <div className="text-[11px] sm:text-xs text-amber-400 uppercase tracking-wider font-semibold mb-1 flex items-center justify-center space-x-1">
+            <ShieldAlert className="w-3.5 h-3.5 text-amber-400" />
             <span>Focus Alerts</span>
           </div>
-          <div className="text-2xl font-bold text-amber-800">{attempt?.totalWarnings}</div>
-          <div className="text-[11px] text-amber-600">tab switches logged</div>
+          <div className="text-xl sm:text-2xl font-black text-amber-400">{attempt?.totalWarnings}</div>
+          <div className="text-[10px] sm:text-[11px] text-amber-500">tab switches</div>
         </div>
       </div>
 
       {/* Module Breakdown Table */}
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
-          <h2 className="font-bold text-slate-900 text-base">Module-by-Module Performance</h2>
-          <span className="text-xs text-slate-500">20 MCQs per module</span>
+      <div className="bg-slate-900/90 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-xl border border-slate-800 overflow-hidden text-white">
+        <div className="px-5 py-4 border-b border-slate-800 flex items-center justify-between">
+          <h2 className="font-bold text-white text-sm sm:text-base">Module-by-Module Performance</h2>
+          <span className="text-[11px] text-slate-400">20 MCQs per module</span>
         </div>
 
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-slate-200 text-sm">
-            <thead className="bg-slate-50 text-slate-600 text-xs uppercase font-semibold">
+          <table className="min-w-full divide-y divide-slate-800 text-xs sm:text-sm">
+            <thead className="bg-slate-950/60 text-slate-400 text-[10px] sm:text-xs uppercase font-semibold">
               <tr>
-                <th className="px-6 py-3 text-left">Module</th>
-                <th className="px-6 py-3 text-left">Title</th>
-                <th className="px-6 py-3 text-center">Attempted</th>
-                <th className="px-6 py-3 text-center">Correct</th>
-                <th className="px-6 py-3 text-center">Wrong</th>
-                <th className="px-6 py-3 text-right">Score</th>
+                <th className="px-4 sm:px-6 py-3 text-left">Module</th>
+                <th className="px-4 sm:px-6 py-3 text-left">Title</th>
+                <th className="px-3 sm:px-6 py-3 text-center">Attempted</th>
+                <th className="px-3 sm:px-6 py-3 text-center">Correct</th>
+                <th className="px-3 sm:px-6 py-3 text-center">Wrong</th>
+                <th className="px-4 sm:px-6 py-3 text-right">Score</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-slate-800/60">
               {attempt?.moduleAttempts?.map((mod: any) => (
-                <tr key={mod.moduleId} className="hover:bg-slate-50/50">
-                  <td className="px-6 py-4 font-bold text-slate-900">
+                <tr key={mod.moduleId} className="hover:bg-slate-800/40">
+                  <td className="px-4 sm:px-6 py-3 sm:py-4 font-bold text-white whitespace-nowrap">
                     Module {mod.moduleId}
                   </td>
-                  <td className="px-6 py-4 text-slate-600">{mod.moduleTitle}</td>
-                  <td className="px-6 py-4 text-center font-medium text-slate-700">
+                  <td className="px-4 sm:px-6 py-3 sm:py-4 text-slate-300 min-w-[160px]">{mod.moduleTitle}</td>
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-center font-medium text-slate-300 whitespace-nowrap">
                     {mod.attempted} / 20
                   </td>
-                  <td className="px-6 py-4 text-center font-bold text-emerald-600">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-center font-bold text-emerald-400 whitespace-nowrap">
                     {mod.correct}
                   </td>
-                  <td className="px-6 py-4 text-center font-medium text-rose-600">
+                  <td className="px-3 sm:px-6 py-3 sm:py-4 text-center font-medium text-rose-400 whitespace-nowrap">
                     {mod.wrong}
                   </td>
-                  <td className="px-6 py-4 text-right font-black text-slate-900">
-                    {mod.score} / 20.0
+                  <td className="px-4 sm:px-6 py-3 sm:py-4 text-right font-black text-white whitespace-nowrap">
+                    {mod.score} / 20
                   </td>
                 </tr>
               ))}

@@ -80,15 +80,18 @@ export const FocusMonitor: React.FC<FocusMonitorProps> = ({
 
   return (
     <div
-      className={`inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-semibold border ${
+      className={`inline-flex items-center space-x-1.5 px-2.5 sm:px-3 py-1 rounded-xl text-[11px] sm:text-xs font-bold border ${
         warnings === 0
-          ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
-          : 'bg-rose-50 text-rose-800 border-rose-300 animate-pulse'
+          ? 'bg-slate-900/90 text-emerald-400 border-emerald-900/60'
+          : 'bg-rose-950 text-rose-300 border-rose-800 animate-pulse'
       }`}
     >
-      <ShieldAlert className="w-3.5 h-3.5" />
+      <ShieldAlert className="w-3.5 h-3.5 text-rose-400 shrink-0" />
       <span>
-        Strict Proctoring: <strong>0 Tab Switches Allowed</strong> (1 Switch = Out of Test)
+        <span className="sm:hidden">Strict Proctoring</span>
+        <span className="hidden sm:inline">
+          Strict Proctoring: <strong>0 Tab Switches Allowed</strong> (1 Switch = Out)
+        </span>
       </span>
     </div>
   );

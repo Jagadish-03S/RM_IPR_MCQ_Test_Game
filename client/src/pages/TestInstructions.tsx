@@ -34,10 +34,10 @@ export const TestInstructions: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center bg-slate-950">
+      <div className="min-h-[calc(100vh-3.5rem)] flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-500 mx-auto mb-3"></div>
-          <p className="text-sm text-slate-400">Loading candidate profile...</p>
+          <div className="animate-spin rounded-full h-8 w-8 sm:h-10 sm:w-10 border-b-2 border-blue-500 mx-auto mb-3"></div>
+          <p className="text-xs sm:text-sm text-slate-400">Loading candidate profile...</p>
         </div>
       </div>
     );
@@ -47,27 +47,27 @@ export const TestInstructions: React.FC = () => {
     {
       id: 1,
       title: 'Module 1: Introduction to Research Methodology',
-      chapters: 'Chapter 1: Definitions, Problem Formulation & Engineering Research Cycles',
+      chapters: 'Chapter 1: Definitions, Problem Formulation & Engineering Cycles',
       questions: 20,
       marks: 20
     },
     {
       id: 2,
-      title: 'Module 2: Literature Review and Technical Reading',
-      chapters: 'Chapters 2 & 3: Literature Survey, Citations, Attributions & Ethics',
+      title: 'Module 2: Literature Review & Citations',
+      chapters: 'Chapters 2 & 3: Literature Survey, IEEE Citations & Ethics',
       questions: 20,
       marks: 20
     },
     {
       id: 3,
-      title: 'Module 3: Introduction to Intellectual Property & Patents',
-      chapters: 'Chapters 4, 5 & 6: IPR Overview, Patent Law & Process of Patenting',
+      title: 'Module 3: Intellectual Property & Patents',
+      chapters: 'Chapters 4, 5 & 6: IPR Basics, Patent Process & Claims',
       questions: 20,
       marks: 20
     },
     {
       id: 4,
-      title: 'Module 4: Copyrights and Related Rights; Trademarks',
+      title: 'Module 4: Copyrights & Trademarks',
       chapters: 'Chapters 7 & 8: Berne Convention, Copyright Protection & Trademarks',
       questions: 20,
       marks: 20
@@ -75,92 +75,68 @@ export const TestInstructions: React.FC = () => {
     {
       id: 5,
       title: 'Module 5: Industrial Design, GI & Case Studies',
-      chapters: 'Chapters 9, 10 & 11: Industrial Designs, Geographical Indications & Landmark Cases',
+      chapters: 'Chapters 9, 10 & 11: Industrial Designs, Geographical Indications & Cases',
       questions: 20,
       marks: 20
     }
   ];
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8 sm:px-6 lg:px-8 space-y-8">
+    <div className="max-w-6xl mx-auto px-3 py-4 sm:py-8 sm:px-6 lg:px-8 space-y-4 sm:space-y-6 relative z-10 text-white">
       {/* Candidate Verification Card */}
-      <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 text-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
-        <div className="relative z-10">
-          <span className="text-xs font-bold text-blue-400 uppercase tracking-widest bg-blue-950/90 px-3 py-1 rounded-full border border-blue-800/80">
+      <div className="bg-slate-900/90 backdrop-blur-xl text-white rounded-2xl sm:rounded-3xl p-4 sm:p-7 shadow-xl border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <span className="text-[10px] sm:text-xs font-black text-blue-400 uppercase tracking-widest bg-blue-950/90 px-2.5 py-1 rounded-lg border border-blue-800/80">
             Candidate Verification & Protocol
           </span>
-          <h1 className="text-2xl sm:text-3xl font-extrabold mt-3 tracking-tight">
+          <h1 className="text-xl sm:text-3xl font-black mt-2 tracking-tight">
             Research Methodology & IPR Examination
           </h1>
-          <p className="text-xs sm:text-sm text-slate-400 mt-1">
-            VTU Course Code BRMK557 • Total 100 Multiple Choice Questions (100 Marks)
+          <p className="text-xs sm:text-sm text-slate-400 mt-0.5">
+            VTU Course Code BRMK557 • Total 100 MCQs (100 Marks)
           </p>
         </div>
 
         {student && (
-          <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shrink-0 shadow-lg relative z-10 min-w-[240px]">
-            <div className="flex items-center space-x-2 text-xs text-slate-400 mb-1">
+          <div className="bg-slate-950/80 border border-slate-800 rounded-xl sm:rounded-2xl p-3 sm:p-4 shrink-0 shadow-inner">
+            <div className="flex items-center space-x-1.5 text-[11px] text-slate-400 mb-0.5">
               <User className="w-3.5 h-3.5 text-blue-400" />
               <span>Verified Candidate</span>
             </div>
-            <p className="font-bold text-base text-white">{student.fullName}</p>
-            <p className="font-mono text-xs text-blue-400 font-semibold tracking-wider mt-0.5">
+            <p className="font-bold text-sm sm:text-base text-white">{student.fullName}</p>
+            <p className="font-mono text-xs text-blue-400 font-semibold tracking-wider">
               USN: {student.usn}
             </p>
           </div>
         )}
       </div>
 
-      {/* Textbook Reference Callout */}
-      <div className="bg-gradient-to-r from-blue-950/40 via-indigo-950/30 to-blue-950/40 border border-blue-900/60 rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div className="flex items-start space-x-3.5">
-          <div className="p-2.5 bg-blue-600/30 text-blue-400 rounded-xl shrink-0 mt-0.5">
-            <BookOpen className="w-5 h-5" />
-          </div>
-          <div>
-            <h3 className="font-bold text-sm text-white">Prescribed Textbook Reference</h3>
-            <p className="text-xs text-slate-400 mt-0.5">
-              Every MCQ in this examination is sourced and verified directly from the BRMK557 textbook.
-            </p>
-          </div>
-        </div>
-        <a
-          href="/api/downloads/textbook?inline=true"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center space-x-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow transition shrink-0"
-        >
-          <BookOpen className="w-3.5 h-3.5" />
-          <span>Refer Textbook (PDF) ↗</span>
-        </a>
-      </div>
-
       {/* Modules Structure */}
       <div>
-        <h2 className="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
-          <BookOpen className="w-5 h-5 text-blue-600" />
-          <span>Assessment Structure (5 Ordered Modules)</span>
+        <h2 className="text-sm sm:text-base font-bold text-slate-200 mb-3 flex items-center space-x-2">
+          <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
+          <span>Curriculum Modules (5 Sequential Modules • 20 MCQs Each)</span>
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {modules.map((m) => (
             <div
               key={m.id}
-              className="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition"
+              className="bg-slate-900/90 backdrop-blur-xl rounded-xl sm:rounded-2xl p-4 border border-slate-800 shadow-md hover:border-slate-700 transition"
             >
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-bold text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-md border border-blue-100">
+              <div className="flex items-center justify-between mb-1.5">
+                <span className="text-[11px] font-bold text-blue-300 bg-blue-950/80 px-2 py-0.5 rounded-lg border border-blue-800/60">
                   Module {m.id}
                 </span>
-                <span className="text-xs font-bold text-slate-600">
+                <span className="text-[11px] font-bold text-slate-400">
                   {m.marks} Marks
                 </span>
               </div>
-              <h3 className="font-bold text-slate-900 text-sm mb-1">{m.title}</h3>
-              <p className="text-xs text-slate-500 leading-relaxed">{m.chapters}</p>
-              <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-600 font-medium">
+              <h3 className="font-bold text-white text-xs sm:text-sm mb-1">{m.title}</h3>
+              <p className="text-[11px] sm:text-xs text-slate-400 leading-relaxed">{m.chapters}</p>
+              <div className="mt-2.5 pt-2 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400 font-medium">
                 <span>{m.questions} Questions</span>
-                <span className="text-emerald-600 font-semibold">+1 mark each</span>
+                <span className="text-emerald-400 font-semibold">+1 mark each</span>
               </div>
             </div>
           ))}
@@ -168,54 +144,50 @@ export const TestInstructions: React.FC = () => {
       </div>
 
       {/* Rules & Integrity Protocols */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
-          <h3 className="font-bold text-slate-900 text-base mb-3 flex items-center space-x-2">
-            <Award className="w-5 h-5 text-blue-600" />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="bg-slate-900/90 backdrop-blur-xl rounded-2xl p-4 sm:p-6 border border-slate-800 shadow-sm">
+          <h3 className="font-bold text-white text-sm sm:text-base mb-2.5 flex items-center space-x-2">
+            <Award className="w-4 h-4 text-blue-400" />
             <span>Scoring & Progression Policy</span>
           </h3>
-          <ul className="space-y-2.5 text-xs sm:text-sm text-slate-600">
+          <ul className="space-y-2 text-xs sm:text-sm text-slate-300">
             <li className="flex items-start space-x-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
               <span><strong>+1 Mark</strong> for each correct answer; <strong>0 Marks</strong> for wrong or unanswered.</span>
             </li>
             <li className="flex items-start space-x-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
               <span>Modules must be answered in sequential order (Module 1 through 5).</span>
             </li>
             <li className="flex items-start space-x-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
               <span>Once a module is submitted, answers are <strong>permanently locked</strong> before advancing.</span>
             </li>
             <li className="flex items-start space-x-2">
-              <Clock className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
+              <Clock className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
               <span>Each module has a <strong>{config?.timeLimitMinutesPerModule || 20}-minute timer</strong> with automatic submission upon expiry.</span>
             </li>
           </ul>
         </div>
 
-        <div className="bg-amber-50/40 rounded-2xl p-6 border border-amber-200/80 shadow-sm">
-          <h3 className="font-bold text-amber-950 text-base mb-3 flex items-center space-x-2">
-            <ShieldAlert className="w-5 h-5 text-amber-600" />
+        <div className="bg-amber-950/30 backdrop-blur-xl rounded-2xl p-4 sm:p-6 border border-amber-900/60 shadow-sm">
+          <h3 className="font-bold text-amber-300 text-sm sm:text-base mb-2.5 flex items-center space-x-2">
+            <ShieldAlert className="w-4 h-4 text-amber-400" />
             <span>Browser Integrity & Focus Monitoring</span>
           </h3>
-          <ul className="space-y-2.5 text-xs sm:text-sm text-amber-900">
+          <ul className="space-y-2 text-xs sm:text-sm text-amber-200/90">
             <li className="flex items-start space-x-2">
-              <span className="font-bold shrink-0 text-amber-600">•</span>
-              <span>The assessment monitors active tab visibility and window focus events.</span>
+              <span className="font-bold shrink-0 text-amber-400">•</span>
+              <span>The assessment monitors active window focus and tab switches.</span>
             </li>
             <li className="flex items-start space-x-2">
-              <span className="font-bold shrink-0 text-rose-600">•</span>
-              <span className="text-rose-900 font-semibold">
-                <strong>Zero Tolerance:</strong> Switching tabs or minimizing the window even <strong>once (1 time)</strong> immediately terminates your test and locks you out. You will have to restart from Module 1.
+              <span className="font-bold shrink-0 text-rose-400">•</span>
+              <span className="text-rose-300 font-semibold">
+                <strong>Zero Tolerance:</strong> Switching tabs even <strong>once (1 time)</strong> terminates your test immediately and locks you out. You must restart from Module 1.
               </span>
             </li>
             <li className="flex items-start space-x-2">
-              <span className="font-bold shrink-0 text-amber-600">•</span>
-              <span>All focus anomalies and tab-switch attempts are logged in the official transcript for the examiner.</span>
-            </li>
-            <li className="flex items-start space-x-2">
-              <span className="font-bold shrink-0 text-amber-600">•</span>
+              <span className="font-bold shrink-0 text-amber-400">•</span>
               <span>Question papers, master keys, and solutions unlock <strong>only after</strong> you complete and submit the full assessment.</span>
             </li>
           </ul>
@@ -223,14 +195,14 @@ export const TestInstructions: React.FC = () => {
       </div>
 
       {/* Start Button */}
-      <div className="text-center pt-2">
+      <div className="text-center pt-2 pb-4">
         <button
           type="button"
           onClick={() => navigate('/test')}
-          className="inline-flex items-center justify-center px-8 py-4 rounded-2xl text-base font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 shadow-xl shadow-blue-900/30 hover:shadow-2xl transition transform hover:-translate-y-0.5 active:translate-y-0"
+          className="w-full sm:w-auto inline-flex items-center justify-center px-6 sm:px-10 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl text-sm sm:text-base font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 shadow-xl shadow-blue-900/40 transition transform active:scale-98"
         >
           <span>I Agree to Rules • Begin Module 1</span>
-          <ArrowRight className="ml-2 w-5 h-5" />
+          <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
         </button>
       </div>
     </div>

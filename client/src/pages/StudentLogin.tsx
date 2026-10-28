@@ -52,25 +52,25 @@ export const StudentLogin: React.FC = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div className="min-h-[calc(100vh-3.5rem)] sm:min-h-[calc(100vh-4rem)] flex flex-col justify-center py-6 sm:py-12 px-3 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* Background Subtle Ambient Glow */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 sm:w-96 h-72 sm:h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center relative z-10">
-        <div className="inline-flex items-center justify-center p-3.5 bg-gradient-to-tr from-blue-700 to-indigo-600 rounded-2xl shadow-xl shadow-blue-900/30 mb-4 text-white ring-1 ring-white/20">
-          <GraduationCap className="h-9 w-9" />
+        <div className="inline-flex items-center justify-center p-3 sm:p-3.5 bg-gradient-to-tr from-blue-700 to-indigo-600 rounded-2xl shadow-xl shadow-blue-900/30 mb-3 sm:mb-4 text-white ring-1 ring-white/20">
+          <GraduationCap className="h-7 w-7 sm:h-9 sm:w-9" />
         </div>
-        <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+        <h1 className="text-xl sm:text-3xl font-black text-white tracking-tight">
           Student Assessment Portal
         </h1>
-        <p className="mt-2 text-xs sm:text-sm text-slate-400">
-          Course: Research Methodology & Intellectual Property Rights (BRMK557)
+        <p className="mt-1 sm:mt-2 text-xs sm:text-sm text-slate-400">
+          VTU Course Code BRMK557 • Research Methodology & IPR
         </p>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-10">
-        <div className="bg-slate-900/90 backdrop-blur-xl py-8 px-6 sm:px-10 shadow-2xl rounded-3xl border border-slate-800 ring-1 ring-white/10">
-          <form className="space-y-5" onSubmit={handleSubmit}>
+      <div className="mt-6 sm:mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-10">
+        <div className="bg-slate-900/90 backdrop-blur-xl py-6 sm:py-8 px-4 sm:px-10 shadow-2xl rounded-2xl sm:rounded-3xl border border-slate-800 ring-1 ring-white/10">
+          <form className="space-y-4 sm:space-y-5" onSubmit={handleSubmit}>
             {error && (
               <div className="bg-rose-950/60 border border-rose-800 text-rose-300 text-xs rounded-xl p-3 flex items-start space-x-2">
                 <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-rose-400" />
