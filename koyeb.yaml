@@ -18,10 +18,11 @@ services:
         value: production
       - key: PORT
         value: "5000"
+      - key: DATABASE_URL
+        value: "file:/app/prisma/dev.db"
       - key: JWT_SECRET
         value: rm_ipr_vtu_super_secret_jwt_key_2026_jagadish_exam_portal
       - key: ADMIN_EMAIL
         value: sjagadish89772@gmail.com
       - key: ADMIN_PASSWORD
         value: Prathiksha@123
-

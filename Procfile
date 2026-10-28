@@ -1,2 +1,1 @@
-web: npm --prefix server run prisma:push && npm --prefix server run prisma:seed && node server/dist/index.js
-
+web: npm --prefix server run prisma:push && node server/dist/seed.js && node server/dist/index.js
