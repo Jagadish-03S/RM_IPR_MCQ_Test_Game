@@ -39,7 +39,8 @@ ENV ADMIN_INITIAL_EMAIL="sjagadish89772@gmail.com"
 ENV ADMIN_INITIAL_PASSWORD="Prathiksha@123"
 ENV ADMIN_INITIAL_NAME="Jagadish S"
 
+ENV PORT=5000
+
 EXPOSE 5000
-EXPOSE 8080
 
 CMD ["node", "server/dist/index.js"]
