@@ -36,3 +36,4 @@ describe('Student Authentication & Integrity Restrictions', () => {
     expect(isRetakeBlocked).toBe(true);
   });
 });
+

@@ -9,14 +9,17 @@ import { FinalResults } from './pages/FinalResults';
 import { AdminLogin } from './pages/AdminLogin';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { DownloadCentre } from './pages/DownloadCentre';
-import { DogCatPlayLounge } from './components/DogCatPlayLounge';
+import { PetPlayBackground } from './components/PetPlayBackground';
 
 export const App: React.FC = () => {
   return (
     <BrowserRouter>
-      <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800">
+      <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 relative overflow-x-hidden">
+        {/* Real Dog & Cat Running & Playing in the Page Background */}
+        <PetPlayBackground />
+
         <Navbar />
-        <main className="flex-1">
+        <main className="flex-1 relative z-10">
           <Routes>
             <Route path="/" element={<StudentLogin />} />
             <Route path="/instructions" element={<TestInstructions />} />
@@ -29,7 +32,6 @@ export const App: React.FC = () => {
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
-        <DogCatPlayLounge />
         <Footer />
       </div>
     </BrowserRouter>
