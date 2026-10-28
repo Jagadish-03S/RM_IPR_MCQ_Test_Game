@@ -45,7 +45,29 @@ app.use('/api/student', studentRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/downloads', downloadsRouter);
 
-// 404 Handler
+// Serve Built React Frontend Static Files (Single-Host Production Deployment)
+import path from 'path';
+import fs from 'fs';
+
+const clientDistPath = path.resolve(__dirname, '../../client/dist');
+const altClientDistPath = path.resolve(process.cwd(), 'client/dist');
+const publicDistPath = fs.existsSync(clientDistPath)
+  ? clientDistPath
+  : fs.existsSync(altClientDistPath)
+  ? altClientDistPath
+  : null;
+
+if (publicDistPath) {
+  app.use(express.static(publicDistPath));
+  app.get('*', (req, res, next) => {
+    if (req.originalUrl.startsWith('/api')) {
+      return next();
+    }
+    res.sendFile(path.join(publicDistPath, 'index.html'));
+  });
+}
+
+// 404 Handler for Unmatched API routes
 app.use('/api/*', (req, res) => {
   res.status(404).json({ error: `API route ${req.originalUrl} not found.` });
 });

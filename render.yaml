@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: rm-ipr-assessment-game
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm run install:all && npm --prefix server run prisma:generate && npm run build
+    startCommand: npm --prefix server run prisma:push && npm --prefix server run prisma:seed && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_EMAIL
+        value: sjagadish89772@gmail.com
+      - key: ADMIN_PASSWORD
+        value: Prathiksha@123
