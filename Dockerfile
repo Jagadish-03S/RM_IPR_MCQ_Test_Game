@@ -12,7 +12,6 @@ COPY client/package*.json ./client/
 COPY prisma ./prisma/
 
 # Set build-time and run-time environment variables
-ENV NODE_ENV=production
 ENV PORT=5000
 ENV DATABASE_URL="file:/app/prisma/dev.db"
 ENV JWT_SECRET="rm-ipr-secure-secret-token-key-university-2026-vtu"
@@ -37,6 +36,9 @@ COPY . .
 # Build client (Vite -> client/dist) and server (TypeScript -> server/dist)
 RUN npm --prefix client run build
 RUN npm --prefix server run build
+
+# Set production mode only after build tooling (devDependencies) has been used
+ENV NODE_ENV=production
 
 # Ensure database directory exists and is writable
 RUN mkdir -p /app/prisma && chmod 777 /app/prisma
