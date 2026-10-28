@@ -32,6 +32,7 @@ export const studentApi = {
     api.post('/student/submit-module', { moduleId, timeTakenSeconds }),
   sendFocusEvent: (moduleId: number, eventType: string, durationAwayMs?: number) =>
     api.post('/student/focus-event', { moduleId, eventType, durationAwayMs }),
+  restartTest: () => api.post('/student/restart'),
   getResults: () => api.get('/student/results')
 };
 

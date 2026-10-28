@@ -205,12 +205,14 @@ export const TestInstructions: React.FC = () => {
               <span>The assessment monitors active tab visibility and window focus events.</span>
             </li>
             <li className="flex items-start space-x-2">
-              <span className="font-bold shrink-0 text-amber-600">•</span>
-              <span>Switching tabs, minimizing the window, or losing focus triggers an <strong>Integrity Warning</strong>.</span>
+              <span className="font-bold shrink-0 text-rose-600">•</span>
+              <span className="text-rose-900 font-semibold">
+                <strong>Zero Tolerance:</strong> Switching tabs or minimizing the window even <strong>once (1 time)</strong> immediately terminates your test and locks you out. You will have to restart from Module 1.
+              </span>
             </li>
             <li className="flex items-start space-x-2">
               <span className="font-bold shrink-0 text-amber-600">•</span>
-              <span>All focus anomalies and away durations are logged in the official transcript for the examiner.</span>
+              <span>All focus anomalies and tab-switch attempts are logged in the official transcript for the examiner.</span>
             </li>
             <li className="flex items-start space-x-2">
               <span className="font-bold shrink-0 text-amber-600">•</span>

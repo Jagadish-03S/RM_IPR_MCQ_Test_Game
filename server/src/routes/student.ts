@@ -63,7 +63,7 @@ studentRouter.post('/login', async (req, res: Response) => {
     const existingAttempt = await prisma.testAttempt.findFirst({
       where: {
         studentId: student.id,
-        status: { in: ['IN_PROGRESS', 'NOT_STARTED'] }
+        status: { in: ['IN_PROGRESS', 'NOT_STARTED', 'DISQUALIFIED'] }
       },
       include: {
         moduleAttempts: { orderBy: { moduleId: 'asc' } }
@@ -194,6 +194,13 @@ studentRouter.get('/module/:moduleId', verifyStudentSession, async (req: Authent
 
     const attempt = req.attempt;
 
+    if (attempt.status === 'DISQUALIFIED') {
+      return res.status(403).json({
+        disqualified: true,
+        error: 'Assessment terminated due to tab switch violation. Please restart the test from the beginning.'
+      });
+    }
+
     // Check sequencing: module cannot be accessed if previous module is not submitted
     const targetModuleAttempt = attempt.moduleAttempts.find((m: any) => m.moduleId === moduleId);
     if (!targetModuleAttempt) {
@@ -257,6 +264,13 @@ studentRouter.get('/module/:moduleId', verifyStudentSession, async (req: Authent
 // 4. SAVE AN ANSWER TO A QUESTION
 studentRouter.post('/save-answer', verifyStudentSession, async (req: AuthenticatedStudentRequest, res: Response) => {
   try {
+    if (req.attempt.status === 'DISQUALIFIED') {
+      return res.status(403).json({
+        disqualified: true,
+        error: 'Assessment terminated due to tab switch violation. Please restart the test.'
+      });
+    }
+
     const { questionId, selectedOption } = req.body;
     if (!questionId) {
       return res.status(400).json({ error: 'Missing questionId.' });
@@ -311,6 +325,13 @@ studentRouter.post('/save-answer', verifyStudentSession, async (req: Authenticat
 // 5. SUBMIT A MODULE
 studentRouter.post('/submit-module', verifyStudentSession, async (req: AuthenticatedStudentRequest, res: Response) => {
   try {
+    if (req.attempt.status === 'DISQUALIFIED') {
+      return res.status(403).json({
+        disqualified: true,
+        error: 'Assessment terminated due to tab switch violation. Please restart the test.'
+      });
+    }
+
     const { moduleId, timeTakenSeconds } = req.body;
     const modId = parseInt(moduleId, 10);
     if (isNaN(modId) || modId < 1 || modId > 5) {
@@ -443,7 +464,7 @@ studentRouter.post('/submit-module', verifyStudentSession, async (req: Authentic
   }
 });
 
-// 6. RECORD TAB-SWITCH & INTEGRITY FOCUS EVENT
+// 6. RECORD TAB-SWITCH & INTEGRITY FOCUS EVENT (ONE-STRIKE DISQUALIFICATION)
 studentRouter.post('/focus-event', verifyStudentSession, async (req: AuthenticatedStudentRequest, res: Response) => {
   try {
     const { moduleId, eventType, durationAwayMs } = req.body;
@@ -456,31 +477,103 @@ studentRouter.post('/focus-event', verifyStudentSession, async (req: Authenticat
       data: {
         attemptId: req.attempt.id,
         moduleId: modId,
-        eventType: eventType || 'WINDOW_BLUR',
+        eventType: eventType || 'TAB_SWITCH',
         warningCount: currentWarnings,
         durationAwayMs: durationAwayMs ? parseInt(durationAwayMs, 10) : 0,
         timestamp: new Date()
       }
     });
 
-    // Increment warning count on test attempt
+    // STRICT EXAMINATION RULE: A SINGLE (1) TAB-SWITCH DISQUALIFIES THE CANDIDATE IMMEDIATELY!
     const updatedAttempt = await prisma.testAttempt.update({
       where: { id: req.attempt.id },
       data: {
-        totalWarnings: currentWarnings
+        totalWarnings: currentWarnings,
+        status: 'DISQUALIFIED'
       }
     });
 
-    const config = await prisma.testConfig.findUnique({ where: { id: 'default' } });
-
     return res.json({
       success: true,
+      disqualified: true,
       totalWarnings: updatedAttempt.totalWarnings,
-      maxWarnings: config?.maxFocusWarnings || 5
+      message: 'Assessment terminated. A tab switch was detected. You have been removed from the test and must restart from the beginning.'
     });
   } catch (error) {
     console.error('Error recording focus event:', error);
     return res.status(500).json({ error: 'Failed to record focus monitoring event.' });
+  }
+});
+
+// 7. RESTART ASSESSMENT AFTER TAB-SWITCH DISQUALIFICATION
+studentRouter.post('/restart', verifyStudentSession, async (req: AuthenticatedStudentRequest, res: Response) => {
+  try {
+    const attemptId = req.attempt.id;
+
+    // Clear saved student responses & focus events
+    await prisma.studentResponse.deleteMany({ where: { attemptId } });
+    await prisma.focusEvent.deleteMany({ where: { attemptId } });
+
+    // Reset module attempts
+    await prisma.moduleAttempt.updateMany({
+      where: { attemptId },
+      data: {
+        status: 'NOT_STARTED',
+        score: 0.0,
+        attempted: 0,
+        correct: 0,
+        wrong: 0,
+        unanswered: 20,
+        startedAt: null,
+        submittedAt: null,
+        timeTakenSeconds: 0
+      }
+    });
+
+    // Reset Module 1 to IN_PROGRESS
+    const mod1 = await prisma.moduleAttempt.findFirst({
+      where: { attemptId, moduleId: 1 }
+    });
+    if (mod1) {
+      await prisma.moduleAttempt.update({
+        where: { id: mod1.id },
+        data: {
+          status: 'IN_PROGRESS',
+          startedAt: new Date()
+        }
+      });
+    }
+
+    // Reset TestAttempt to IN_PROGRESS with 0 warnings
+    const restartedAttempt = await prisma.testAttempt.update({
+      where: { id: attemptId },
+      data: {
+        status: 'IN_PROGRESS',
+        currentModuleId: 1,
+        startedAt: new Date(),
+        completedAt: null,
+        totalScore: 0.0,
+        totalAttempted: 0,
+        totalCorrect: 0,
+        totalWrong: 0,
+        totalUnanswered: 100,
+        percentage: 0.0,
+        totalWarnings: 0
+      },
+      include: {
+        student: true,
+        moduleAttempts: { orderBy: { moduleId: 'asc' } }
+      }
+    });
+
+    return res.json({
+      success: true,
+      message: 'Assessment restarted from Module 1. Please remain on this window to avoid disqualification.',
+      attempt: restartedAttempt
+    });
+  } catch (error) {
+    console.error('Error restarting assessment:', error);
+    return res.status(500).json({ error: 'Failed to restart assessment.' });
   }
 });
 

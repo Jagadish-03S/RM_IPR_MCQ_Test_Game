@@ -63,17 +63,19 @@ export const Navbar: React.FC = () => {
 
         {/* User Badges & Action Controls */}
         <div className="flex items-center space-x-4">
-          {/* Prescribed Textbook Quick Reference Button */}
-          <a
-            href="/api/downloads/textbook?inline=true"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden sm:flex items-center space-x-1.5 text-xs text-slate-300 hover:text-white bg-slate-900 hover:bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-800 hover:border-slate-700 transition"
-            title="Read Prescribed Textbook in New Tab"
-          >
-            <BookOpen className="w-3.5 h-3.5 text-blue-400" />
-            <span>Refer Textbook (PDF)</span>
-          </a>
+          {/* Prescribed Textbook Quick Reference Button (Student Portal Only) */}
+          {!isAdminRoute && (
+            <a
+              href="/api/downloads/textbook?inline=true"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:flex items-center space-x-1.5 text-xs text-slate-300 hover:text-white bg-slate-900 hover:bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-800 hover:border-slate-700 transition"
+              title="Read Prescribed Textbook in New Tab"
+            >
+              <BookOpen className="w-3.5 h-3.5 text-blue-400" />
+              <span>Refer Textbook (PDF)</span>
+            </a>
+          )}
 
           {/* Student Status Badge (Only on student side when logged in) */}
           {!isAdminRoute && studentName && (
