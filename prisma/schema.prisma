@@ -1,0 +1,127 @@
+// Prisma Schema for RM & IPR MCQ Test Game & Student Performance Management System
+// Compatible with SQLite (default for zero-setup local Windows run) and PostgreSQL (set provider = "postgresql" in production)
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../server/node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  role         String   @default("SUPER_ADMIN") // SUPER_ADMIN, EXAMINER
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Student {
+  id            String        @id @default(uuid())
+  fullName      String
+  usn           String        @unique // Original display USN
+  normalizedUsn String        @unique // Trimmed uppercase for duplicate detection
+  department    String?
+  semester      Int?
+  attempts      TestAttempt[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model TestAttempt {
+  id              String            @id @default(uuid())
+  studentId       String
+  student         Student           @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  status          String            @default("IN_PROGRESS") // NOT_STARTED, IN_PROGRESS, COMPLETED, ABANDONED
+  currentModuleId Int               @default(1) // 1 to 5
+  sessionToken    String            @unique
+  startedAt       DateTime          @default(now())
+  completedAt     DateTime?
+  totalScore      Float             @default(0.0)
+  totalAttempted  Int               @default(0)
+  totalCorrect    Int               @default(0)
+  totalWrong      Int               @default(0)
+  totalUnanswered Int               @default(100)
+  percentage      Float             @default(0.0)
+  totalWarnings   Int               @default(0)
+  moduleAttempts  ModuleAttempt[]
+  responses       StudentResponse[]
+  focusEvents     FocusEvent[]
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  @@index([studentId])
+  @@index([status])
+}
+
+model ModuleAttempt {
+  id               String      @id @default(uuid())
+  attemptId        String
+  testAttempt      TestAttempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  moduleId         Int // 1 to 5
+  moduleTitle      String
+  status           String      @default("NOT_STARTED") // NOT_STARTED, IN_PROGRESS, SUBMITTED
+  score            Float       @default(0.0)
+  attempted        Int         @default(0)
+  correct          Int         @default(0)
+  wrong            Int         @default(0)
+  unanswered       Int         @default(20)
+  startedAt        DateTime?
+  submittedAt      DateTime?
+  timeTakenSeconds Int         @default(0)
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+
+  @@unique([attemptId, moduleId])
+  @@index([attemptId])
+}
+
+model StudentResponse {
+  id             String      @id @default(uuid())
+  attemptId      String
+  testAttempt    TestAttempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  questionId     String // e.g. "m1_q01"
+  moduleId       Int
+  selectedOption String? // "A", "B", "C", "D" or null
+  isCorrect      Boolean?
+  marksObtained  Float       @default(0.0)
+  answeredAt     DateTime?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  @@unique([attemptId, questionId])
+  @@index([attemptId, moduleId])
+}
+
+model FocusEvent {
+  id             String      @id @default(uuid())
+  attemptId      String
+  testAttempt    TestAttempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  moduleId       Int
+  eventType      String // "VISIBILITY_HIDDEN", "WINDOW_BLUR", "DEVTOOLS_OPEN"
+  warningCount   Int
+  durationAwayMs Int?        @default(0)
+  timestamp      DateTime    @default(now())
+
+  @@index([attemptId])
+}
+
+model TestConfig {
+  id                        String   @id @default("default")
+  testTitle                 String   @default("RM & IPR MCQ Test Game")
+  marksPerCorrect           Float    @default(1.0)
+  negativeMarksPerWrong     Float    @default(0.0)
+  marksUnanswered           Float    @default(0.0)
+  timeLimitMinutesPerModule Int      @default(20)
+  allowAnswerReview         Boolean  @default(true)
+  isTestActive              Boolean  @default(true)
+  maxFocusWarnings          Int      @default(5)
+  usnRegexPattern           String   @default("^[0-9][A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{3}$")
+  updatedAt                 DateTime @updatedAt
+}
+
