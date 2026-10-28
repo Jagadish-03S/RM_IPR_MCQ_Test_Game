@@ -73,6 +73,8 @@ app.use('/api/*', (req, res) => {
   res.status(404).json({ error: `API route ${req.originalUrl} not found.` });
 });
 
+import { seedDatabase } from './seed';
+
 // Global Error Handler
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.error('Unhandled server error:', err);
@@ -81,14 +83,41 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
   });
 });
 
-const portNumber = Number(PORT) || 5000;
-app.listen(portNumber, '0.0.0.0', () => {
+const primaryPort = Number(PORT) || 5000;
+app.listen(primaryPort, '0.0.0.0', () => {
   console.log(`=======================================================`);
-  console.log(` RM & IPR MCQ Assessment Server Running on Port ${PORT}`);
-  console.log(` Health Check: http://localhost:${PORT}/api/health`);
+  console.log(` RM & IPR MCQ Assessment Server Running on Port ${primaryPort}`);
+  console.log(` Health Check: http://0.0.0.0:${primaryPort}/health`);
   console.log(` Allowed Origin: ${CLIENT_ORIGIN}`);
   console.log(`=======================================================`);
+  
+  // Ensure database admin and configs are seeded
+  seedDatabase().catch((err) => console.log('Auto-seed check note:', err?.message || err));
 });
+
+// Also bind to port 8080 if primary is different (covers Railway/cloud default proxy port)
+if (primaryPort !== 8080) {
+  try {
+    const fallbackServer = app.listen(8080, '0.0.0.0', () => {
+      console.log(`Fallback listener active on port 8080`);
+    });
+    fallbackServer.on('error', () => {
+      // Ignore if port 8080 already in use
+    });
+  } catch (e) {}
+}
+
+// Also bind to port 5000 if primary is different
+if (primaryPort !== 5000) {
+  try {
+    const fallback5000 = app.listen(5000, '0.0.0.0', () => {
+      console.log(`Fallback listener active on port 5000`);
+    });
+    fallback5000.on('error', () => {
+      // Ignore if port 5000 already in use
+    });
+  } catch (e) {}
+}
 
 export default app;
 
