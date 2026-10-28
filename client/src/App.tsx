@@ -9,14 +9,14 @@ import { FinalResults } from './pages/FinalResults';
 import { AdminLogin } from './pages/AdminLogin';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { DownloadCentre } from './pages/DownloadCentre';
-import { PetPlayBackground } from './components/PetPlayBackground';
+import { ShinchanBackground } from './components/ShinchanBackground';
 
 export const App: React.FC = () => {
   return (
     <BrowserRouter>
       <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 relative overflow-x-hidden">
-        {/* Real Dog & Cat Running & Playing in the Page Background */}
-        <PetPlayBackground />
+        {/* Cartoon Shinchan Playing GIF in Background */}
+        <ShinchanBackground />
 
         <Navbar />
         <main className="flex-1 relative z-10">
