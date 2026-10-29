@@ -58,15 +58,19 @@ const publicDistPath = fs.existsSync(clientDistPath)
   ? altClientDistPath
   : null;
 
+// Web browser requests to Render backend automatically redirect to fast Vercel frontend
+const VERCEL_FRONTEND_URL = 'https://temporary-fleet-sitar-d3bjs27.vercel.app';
+
 if (publicDistPath) {
   app.use(express.static(publicDistPath));
-  app.get('*', (req, res, next) => {
-    if (req.originalUrl.startsWith('/api')) {
-      return next();
-    }
-    res.sendFile(path.join(publicDistPath, 'index.html'));
-  });
 }
+
+app.get('*', (req, res, next) => {
+  if (req.originalUrl.startsWith('/api') || req.originalUrl.startsWith('/health')) {
+    return next();
+  }
+  return res.redirect(302, `${VERCEL_FRONTEND_URL}${req.originalUrl}`);
+});
 
 // 404 Handler for Unmatched API routes
 app.use('/api/*', (req, res) => {

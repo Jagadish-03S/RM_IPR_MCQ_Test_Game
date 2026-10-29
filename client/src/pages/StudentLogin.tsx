@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { GraduationCap, ArrowRight, AlertCircle, CheckCircle2, BookOpen } from 'lucide-react';
+import { GraduationCap, ArrowRight, AlertCircle, CheckCircle2, BookOpen, ShieldCheck } from 'lucide-react';
 import { studentApi, API_BASE_URL } from '../services/api';
 
 export const StudentLogin: React.FC = () => {

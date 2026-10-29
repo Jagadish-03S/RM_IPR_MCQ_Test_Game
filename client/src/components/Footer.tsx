@@ -1,5 +1,5 @@
 import React from 'react';
-import { Github, Mail, CheckCircle2 } from 'lucide-react';
+import { Github, Mail, CheckCircle2, ShieldCheck } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (

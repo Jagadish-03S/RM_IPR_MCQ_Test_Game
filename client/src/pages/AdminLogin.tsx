@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ShieldCheck, Lock, Mail, AlertCircle, ArrowRight } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
+import { ShieldCheck, Lock, Mail, AlertCircle, ArrowRight, GraduationCap } from 'lucide-react';
 import { adminApi } from '../services/api';
 
 export const AdminLogin: React.FC = () => {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('sjagadish89772@gmail.com');
+  const [password, setPassword] = useState('Prathiksha@123');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -120,6 +120,16 @@ export const AdminLogin: React.FC = () => {
                   </>
                 )}
               </button>
+            </div>
+
+            <div className="pt-2 text-center border-t border-slate-800">
+              <Link
+                to="/"
+                className="inline-flex items-center space-x-1.5 text-xs text-slate-400 hover:text-blue-400 font-medium transition"
+              >
+                <GraduationCap className="w-3.5 h-3.5 text-blue-400" />
+                <span>Return to Student Examination Portal</span>
+              </Link>
             </div>
           </form>
         </div>
