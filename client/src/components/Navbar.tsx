@@ -64,18 +64,6 @@ export const Navbar: React.FC = () => {
 
         {/* User Badges & Action Controls */}
         <div className="flex items-center space-x-2 sm:space-x-4 shrink-0">
-          {/* Admin Portal Direct Link for Examiners */}
-          {!isAdminRoute && (
-            <Link
-              to="/admin/login"
-              className="flex items-center space-x-1.5 text-[11px] sm:text-xs text-indigo-300 hover:text-white bg-indigo-950/70 hover:bg-indigo-900/90 border border-indigo-700/60 px-2.5 sm:px-3 py-1.5 rounded-lg transition font-semibold shadow-sm"
-              title="Examiner & Administrator Portal"
-            >
-              <ShieldCheck className="w-3.5 h-3.5 text-indigo-400" />
-              <span>Admin Portal</span>
-            </Link>
-          )}
-
           {/* Student Portal Link when in Admin route */}
           {isAdminRoute && (
             <Link

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { GraduationCap, ArrowRight, AlertCircle, ShieldCheck, CheckCircle2, BookOpen } from 'lucide-react';
-import { studentApi } from '../services/api';
+import { useNavigate } from 'react-router-dom';
+import { GraduationCap, ArrowRight, AlertCircle, CheckCircle2, BookOpen } from 'lucide-react';
+import { studentApi, API_BASE_URL } from '../services/api';
 
 export const StudentLogin: React.FC = () => {
   const navigate = useNavigate();
@@ -126,23 +126,12 @@ export const StudentLogin: React.FC = () => {
                 )}
               </button>
             </div>
-
-            {/* Direct Admin Link on Student Portal */}
-            <div className="text-center pt-2">
-              <Link
-                to="/admin/login"
-                className="inline-flex items-center space-x-1.5 text-xs text-indigo-400 hover:text-indigo-300 font-medium transition"
-              >
-                <ShieldCheck className="w-3.5 h-3.5 text-indigo-400" />
-                <span>Examiner / Administrator Portal →</span>
-              </Link>
-            </div>
           </form>
 
           {/* Quick Textbook Reference */}
           <div className="mt-5 pt-4 border-t border-slate-800/80">
             <a
-              href="/api/downloads/textbook?inline=true"
+              href={`${API_BASE_URL}/downloads/textbook?inline=true`}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-between text-xs text-blue-400 hover:text-blue-300 bg-blue-950/40 hover:bg-blue-950/70 border border-blue-900/60 p-3 rounded-xl transition group"
