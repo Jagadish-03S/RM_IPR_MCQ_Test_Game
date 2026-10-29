@@ -29,7 +29,12 @@ export const AdminLogin: React.FC = () => {
       localStorage.setItem('rm_ipr_admin_name', admin.name);
       navigate('/admin/dashboard');
     } catch (err: any) {
-      setError(err.response?.data?.error || 'Invalid administrator email or password.');
+      const msg =
+        err.response?.data?.error ||
+        (err.code === 'ERR_NETWORK' || err.message === 'Network Error'
+          ? 'Cannot connect to backend server. Please make sure the backend is running (npm run server).'
+          : err.message || 'Invalid administrator email or password.');
+      setError(msg);
     } finally {
       setLoading(false);
     }

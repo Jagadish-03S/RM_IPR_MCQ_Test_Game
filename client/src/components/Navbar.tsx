@@ -63,18 +63,41 @@ export const Navbar: React.FC = () => {
 
         {/* User Badges & Action Controls */}
         <div className="flex items-center space-x-2 sm:space-x-4 shrink-0">
+          {/* Admin Portal Direct Link for Examiners */}
+          {!isAdminRoute && (
+            <Link
+              to="/admin/login"
+              className="flex items-center space-x-1.5 text-[11px] sm:text-xs text-indigo-300 hover:text-white bg-indigo-950/70 hover:bg-indigo-900/90 border border-indigo-700/60 px-2.5 sm:px-3 py-1.5 rounded-lg transition font-semibold shadow-sm"
+              title="Examiner & Administrator Portal"
+            >
+              <ShieldCheck className="w-3.5 h-3.5 text-indigo-400" />
+              <span>Admin Portal</span>
+            </Link>
+          )}
+
+          {/* Student Portal Link when in Admin route */}
+          {isAdminRoute && (
+            <Link
+              to="/"
+              className="flex items-center space-x-1.5 text-[11px] sm:text-xs text-blue-300 hover:text-white bg-blue-950/70 hover:bg-blue-900/90 border border-blue-700/60 px-2.5 sm:px-3 py-1.5 rounded-lg transition font-semibold shadow-sm"
+              title="Return to Student Portal"
+            >
+              <GraduationCap className="w-3.5 h-3.5 text-blue-400" />
+              <span>Student Portal</span>
+            </Link>
+          )}
+
           {/* Prescribed Textbook Quick Reference Button (Student Portal Only) */}
           {!isAdminRoute && (
             <a
               href="/api/downloads/textbook?inline=true"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center space-x-1 text-[11px] sm:text-xs text-slate-300 hover:text-white bg-slate-900 hover:bg-slate-800 px-2 sm:px-3 py-1.5 rounded-lg border border-slate-800 hover:border-slate-700 transition"
+              className="hidden sm:flex items-center space-x-1 text-[11px] sm:text-xs text-slate-300 hover:text-white bg-slate-900 hover:bg-slate-800 px-2 sm:px-3 py-1.5 rounded-lg border border-slate-800 hover:border-slate-700 transition"
               title="Read Prescribed Textbook in New Tab"
             >
               <BookOpen className="w-3.5 h-3.5 text-blue-400 shrink-0" />
-              <span className="hidden sm:inline">Textbook PDF</span>
-              <span className="sm:hidden">PDF</span>
+              <span>Textbook PDF</span>
             </a>
           )}
 

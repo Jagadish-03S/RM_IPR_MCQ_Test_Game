@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Github, Mail, ShieldCheck, CheckCircle2 } from 'lucide-react';
 
 export const Footer: React.FC = () => {
@@ -29,6 +30,15 @@ export const Footer: React.FC = () => {
             </div>
 
             <div className="flex items-center space-x-2.5">
+              <Link
+                to="/admin/login"
+                className="flex items-center space-x-1.5 text-indigo-300 hover:text-white bg-indigo-950/80 hover:bg-indigo-900 border border-indigo-700/60 px-3.5 py-2 rounded-xl font-bold transition shadow-sm active:scale-95"
+                title="Examiner & Administrator Portal"
+              >
+                <ShieldCheck className="w-4 h-4 text-indigo-400" />
+                <span>Admin Login</span>
+              </Link>
+
               <a
                 href="https://github.com/Jagadish-03S"
                 target="_blank"
@@ -37,7 +47,7 @@ export const Footer: React.FC = () => {
                 title="GitHub Profile"
               >
                 <Github className="w-4 h-4 text-white" />
-                <span>GitHub Profile</span>
+                <span>GitHub</span>
               </a>
 
               <a
