@@ -1,3 +1,4 @@
+import { API_BASE_URL } from '../services/api';
 import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { GraduationCap, ShieldCheck, LogOut, BookOpen } from 'lucide-react';
@@ -90,7 +91,7 @@ export const Navbar: React.FC = () => {
           {/* Prescribed Textbook Quick Reference Button (Student Portal Only) */}
           {!isAdminRoute && (
             <a
-              href="/api/downloads/textbook?inline=true"
+              href={`${API_BASE_URL}/downloads/textbook?inline=true`}
               target="_blank"
               rel="noopener noreferrer"
               className="hidden sm:flex items-center space-x-1 text-[11px] sm:text-xs text-slate-300 hover:text-white bg-slate-900 hover:bg-slate-800 px-2 sm:px-3 py-1.5 rounded-lg border border-slate-800 hover:border-slate-700 transition"

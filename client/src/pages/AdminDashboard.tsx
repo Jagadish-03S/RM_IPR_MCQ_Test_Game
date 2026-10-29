@@ -12,7 +12,7 @@ import {
   FileSpreadsheet,
   FileText
 } from 'lucide-react';
-import { adminApi } from '../services/api';
+import { adminApi, api, API_BASE_URL } from '../services/api';
 
 export const AdminDashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -21,6 +21,7 @@ export const AdminDashboard: React.FC = () => {
   const [overview, setOverview] = useState<any>(null);
   const [attempts, setAttempts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [downloadingFormat, setDownloadingFormat] = useState<'csv' | 'pdf' | 'docx' | null>(null);
 
   // Filters & Search
   const [searchQuery, setSearchQuery] = useState('');
@@ -139,38 +140,97 @@ export const AdminDashboard: React.FC = () => {
     }
   };
 
-  // Secure Direct Admin Report Downloader
+    // Secure Direct Admin Report Downloader
   const handleDownloadReport = async (format: 'csv' | 'pdf' | 'docx') => {
     const token = localStorage.getItem('rm_ipr_admin_token') || '';
     const timestamp = new Date().toISOString().slice(0, 10);
     const filename = `RM_IPR_Assessment_Report_${timestamp}.${format}`;
+    setDownloadingFormat(format);
 
     try {
-      const response = await fetch(
-        `/api/downloads/admin-report/${format}?token=${encodeURIComponent(token)}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+      // 1. Attempt official generated document from live Render backend
+      const response = await api.get(`/downloads/admin-report/${format}`, {
+        params: { token },
+        responseType: 'blob',
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      );
+      });
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || 'Failed to download report.');
+      if (response.data && response.data.size > 0) {
+        const contentType = response.headers['content-type'] || '';
+        // If an HTML error document was received instead of file, trigger fallback
+        if (contentType.includes('text/html') && format !== 'csv') {
+          throw new Error('Received HTML response instead of document stream.');
+        }
+
+        const mimeTypes: Record<string, string> = {
+          csv: 'text/csv;charset=utf-8;',
+          pdf: 'application/pdf',
+          docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+        };
+
+        const blob = new Blob([response.data], {
+          type: mimeTypes[format] || 'application/octet-stream'
+        });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+        return;
+      }
+      throw new Error('Empty response received from backend.');
+    } catch (err: any) {
+      console.warn('Backend download encountered error, using guaranteed fallback:', err);
+
+      // Instant Fallback for CSV: Generate clean CSV directly in browser from loaded cohort data
+      if (format === 'csv') {
+        try {
+          const exportList = attempts && attempts.length > 0 ? attempts : [];
+          let csvContent =
+            'Rank,Candidate Name,USN,Status,Module 1 (/20),Module 2 (/20),Module 3 (/20),Module 4 (/20),Module 5 (/20),Total Score (/100),Percentage,Focus Warnings,Started At,Completed At\n';
+          exportList.forEach((att: any, idx: number) => {
+            const m1 = att.moduleAttempts?.find((m: any) => m.moduleId === 1)?.score ?? 0;
+            const m2 = att.moduleAttempts?.find((m: any) => m.moduleId === 2)?.score ?? 0;
+            const m3 = att.moduleAttempts?.find((m: any) => m.moduleId === 3)?.score ?? 0;
+            const m4 = att.moduleAttempts?.find((m: any) => m.moduleId === 4)?.score ?? 0;
+            const m5 = att.moduleAttempts?.find((m: any) => m.moduleId === 5)?.score ?? 0;
+            const rank = idx + 1;
+            const name = (att.student?.fullName || '').replace(/"/g, '""');
+            const usn = (att.student?.usn || '').replace(/"/g, '""');
+            const status = att.status || 'IN_PROGRESS';
+            const total = att.totalScore ?? 0;
+            const pct = (att.percentage ?? 0).toFixed(1);
+            const warnings = att.totalWarnings ?? 0;
+            const started = att.startedAt ? new Date(att.startedAt).toLocaleString().replace(/"/g, '""') : 'N/A';
+            const completed = att.completedAt ? new Date(att.completedAt).toLocaleString().replace(/"/g, '""') : 'In Progress';
+            csvContent += `${rank},"${name}","${usn}","${status}",${m1},${m2},${m3},${m4},${m5},${total},"${pct}%",${warnings},"${started}","${completed}"\n`;
+          });
+
+          const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = filename;
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(url);
+          document.body.removeChild(a);
+          return;
+        } catch (csvErr) {
+          console.error('Local CSV generation failed:', csvErr);
+        }
       }
 
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
-    } catch (err: any) {
-      alert(err.message || 'Error downloading administrator report.');
+      // Fallback for PDF and DOCX: direct window navigation to Render backend URL
+      const directUrl = `${API_BASE_URL}/downloads/admin-report/${format}?token=${encodeURIComponent(token)}`;
+      window.open(directUrl, '_blank');
+    } finally {
+      setDownloadingFormat(null);
     }
   };
 
@@ -482,11 +542,16 @@ export const AdminDashboard: React.FC = () => {
               </div>
               <button
                 type="button"
+                disabled={downloadingFormat === 'csv'}
                 onClick={() => handleDownloadReport('csv')}
-                className="mt-4 inline-flex items-center justify-center space-x-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow-sm transition active:scale-98"
+                className="mt-4 inline-flex items-center justify-center space-x-1.5 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow-sm transition active:scale-98"
               >
-                <Download className="w-3.5 h-3.5" />
-                <span>Export CSV Report</span>
+                {downloadingFormat === 'csv' ? (
+                  <div className="animate-spin rounded-full h-3.5 w-3.5 border-b-2 border-white" />
+                ) : (
+                  <Download className="w-3.5 h-3.5" />
+                )}
+                <span>{downloadingFormat === 'csv' ? 'Generating CSV...' : 'Export CSV Report'}</span>
               </button>
             </div>
 
@@ -502,11 +567,16 @@ export const AdminDashboard: React.FC = () => {
               </div>
               <button
                 type="button"
+                disabled={downloadingFormat === 'pdf'}
                 onClick={() => handleDownloadReport('pdf')}
-                className="mt-4 inline-flex items-center justify-center space-x-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow-sm transition active:scale-98"
+                className="mt-4 inline-flex items-center justify-center space-x-1.5 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow-sm transition active:scale-98"
               >
-                <Download className="w-3.5 h-3.5" />
-                <span>Download PDF Report</span>
+                {downloadingFormat === 'pdf' ? (
+                  <div className="animate-spin rounded-full h-3.5 w-3.5 border-b-2 border-white" />
+                ) : (
+                  <Download className="w-3.5 h-3.5" />
+                )}
+                <span>{downloadingFormat === 'pdf' ? 'Generating PDF...' : 'Download PDF Report'}</span>
               </button>
             </div>
 
@@ -522,11 +592,16 @@ export const AdminDashboard: React.FC = () => {
               </div>
               <button
                 type="button"
+                disabled={downloadingFormat === 'docx'}
                 onClick={() => handleDownloadReport('docx')}
-                className="mt-4 inline-flex items-center justify-center space-x-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow-sm transition active:scale-98"
+                className="mt-4 inline-flex items-center justify-center space-x-1.5 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow-sm transition active:scale-98"
               >
-                <Download className="w-3.5 h-3.5" />
-                <span>Download DOCX Report</span>
+                {downloadingFormat === 'docx' ? (
+                  <div className="animate-spin rounded-full h-3.5 w-3.5 border-b-2 border-white" />
+                ) : (
+                  <Download className="w-3.5 h-3.5" />
+                )}
+                <span>{downloadingFormat === 'docx' ? 'Generating DOCX...' : 'Download DOCX Report'}</span>
               </button>
             </div>
           </div>

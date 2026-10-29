@@ -11,7 +11,7 @@ import {
   BookOpen,
   FileText
 } from 'lucide-react';
-import { studentApi } from '../services/api';
+import { studentApi, API_BASE_URL } from '../services/api';
 
 export const FinalResults: React.FC = () => {
   const navigate = useNavigate();
@@ -124,7 +124,7 @@ export const FinalResults: React.FC = () => {
           </p>
           <div className="flex items-center space-x-3">
             <a
-              href={`/api/downloads/scorecard/${attempt?.id}/pdf`}
+              href={`${API_BASE_URL}/downloads/scorecard/${attempt?.id}/pdf`}
               download
               className="inline-flex items-center space-x-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-4 py-2 rounded-lg shadow transition"
             >
@@ -132,7 +132,7 @@ export const FinalResults: React.FC = () => {
               <span>Download PDF Scorecard</span>
             </a>
             <a
-              href={`/api/downloads/scorecard/${attempt?.id}/docx`}
+              href={`${API_BASE_URL}/downloads/scorecard/${attempt?.id}/docx`}
               download
               className="inline-flex items-center space-x-1.5 bg-slate-700 hover:bg-slate-600 text-white text-xs font-semibold px-4 py-2 rounded-lg transition"
             >
@@ -266,14 +266,14 @@ export const FinalResults: React.FC = () => {
             </div>
             <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center space-x-2">
               <a
-                href={`/api/downloads/scorecard/${attempt?.id}/pdf`}
+                href={`${API_BASE_URL}/downloads/scorecard/${attempt?.id}/pdf`}
                 download
                 className="flex-1 text-center bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold py-2 rounded-lg transition"
               >
                 PDF Scorecard
               </a>
               <a
-                href={`/api/downloads/scorecard/${attempt?.id}/docx`}
+                href={`${API_BASE_URL}/downloads/scorecard/${attempt?.id}/docx`}
                 download
                 className="flex-1 text-center bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold py-2 rounded-lg border border-slate-700 transition"
               >
@@ -295,14 +295,14 @@ export const FinalResults: React.FC = () => {
             </div>
             <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center space-x-2">
               <a
-                href={`/api/downloads/exam-paper/pdf?token=${sessionToken}`}
+                href={`${API_BASE_URL}/downloads/exam-paper/pdf?token=${sessionToken}`}
                 download
                 className="flex-1 text-center bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold py-2 rounded-lg transition"
               >
                 PDF Paper
               </a>
               <a
-                href={`/api/downloads/exam-paper/docx?token=${sessionToken}`}
+                href={`${API_BASE_URL}/downloads/exam-paper/docx?token=${sessionToken}`}
                 download
                 className="flex-1 text-center bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold py-2 rounded-lg border border-slate-700 transition"
               >
@@ -324,14 +324,14 @@ export const FinalResults: React.FC = () => {
             </div>
             <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center space-x-2">
               <a
-                href={`/api/downloads/answer-key/pdf?token=${sessionToken}`}
+                href={`${API_BASE_URL}/downloads/answer-key/pdf?token=${sessionToken}`}
                 download
                 className="flex-1 text-center bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold py-2 rounded-lg transition"
               >
                 PDF Solutions
               </a>
               <a
-                href={`/api/downloads/answer-key/docx?token=${sessionToken}`}
+                href={`${API_BASE_URL}/downloads/answer-key/docx?token=${sessionToken}`}
                 download
                 className="flex-1 text-center bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold py-2 rounded-lg border border-slate-700 transition"
               >

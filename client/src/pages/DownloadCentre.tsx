@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BookOpen, Lock, CheckCircle2, ArrowRight } from 'lucide-react';
-import { studentApi } from '../services/api';
+import { studentApi, API_BASE_URL } from '../services/api';
 
 export const DownloadCentre: React.FC = () => {
   const [isAuthorized, setIsAuthorized] = useState<boolean>(false);
@@ -104,7 +104,7 @@ export const DownloadCentre: React.FC = () => {
             </div>
           </div>
           <a
-            href="/api/downloads/textbook?inline=true"
+            href={`${API_BASE_URL}/downloads/textbook?inline=true`}
             target="_blank"
             rel="noopener noreferrer"
             className="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition shrink-0"
@@ -164,14 +164,14 @@ export const DownloadCentre: React.FC = () => {
 
           <div className="mt-6 pt-4 border-t border-slate-100 flex items-center space-x-2">
             <a
-              href={`/api/downloads/exam-paper/pdf${tokenParam}`}
+              href={`${API_BASE_URL}/downloads/exam-paper/pdf${tokenParam}`}
               download
               className="flex-1 text-center bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold py-2 rounded-lg transition"
             >
               PDF Paper
             </a>
             <a
-              href={`/api/downloads/exam-paper/docx${tokenParam}`}
+              href={`${API_BASE_URL}/downloads/exam-paper/docx${tokenParam}`}
               download
               className="flex-1 text-center border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-semibold py-2 rounded-lg transition"
             >
@@ -199,14 +199,14 @@ export const DownloadCentre: React.FC = () => {
 
           <div className="mt-6 pt-4 border-t border-slate-100 flex items-center space-x-2">
             <a
-              href={`/api/downloads/answer-key/pdf${tokenParam}`}
+              href={`${API_BASE_URL}/downloads/answer-key/pdf${tokenParam}`}
               download
               className="flex-1 text-center bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold py-2 rounded-lg transition"
             >
               PDF Solutions
             </a>
             <a
-              href={`/api/downloads/answer-key/docx${tokenParam}`}
+              href={`${API_BASE_URL}/downloads/answer-key/docx${tokenParam}`}
               download
               className="flex-1 text-center border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-semibold py-2 rounded-lg transition"
             >
@@ -234,7 +234,7 @@ export const DownloadCentre: React.FC = () => {
 
           <div className="mt-6 pt-4 border-t border-slate-100 flex items-center space-x-2">
             <a
-              href="/api/downloads/textbook?inline=true"
+              href={`${API_BASE_URL}/downloads/textbook?inline=true`}
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 text-center bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold py-2 rounded-lg transition"
@@ -242,7 +242,7 @@ export const DownloadCentre: React.FC = () => {
               Read Online ↗
             </a>
             <a
-              href="/api/downloads/textbook"
+              href={`${API_BASE_URL}/downloads/textbook`}
               download
               className="flex-1 text-center border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-semibold py-2 rounded-lg transition"
             >
@@ -277,14 +277,14 @@ export const DownloadCentre: React.FC = () => {
                 <div className="text-[11px] font-semibold text-slate-500">Question Paper:</div>
                 <div className="flex items-center space-x-2">
                   <a
-                    href={`/api/downloads/module-paper/${m.id}/pdf${tokenParam}`}
+                    href={`${API_BASE_URL}/downloads/module-paper/${m.id}/pdf${tokenParam}`}
                     download
                     className="flex-1 text-center bg-slate-900 hover:bg-slate-800 text-white text-[11px] font-semibold py-1.5 rounded transition"
                   >
                     PDF Paper
                   </a>
                   <a
-                    href={`/api/downloads/module-paper/${m.id}/docx${tokenParam}`}
+                    href={`${API_BASE_URL}/downloads/module-paper/${m.id}/docx${tokenParam}`}
                     download
                     className="flex-1 text-center border border-slate-300 hover:bg-slate-50 text-slate-700 text-[11px] font-semibold py-1.5 rounded transition"
                   >
@@ -295,14 +295,14 @@ export const DownloadCentre: React.FC = () => {
                 <div className="text-[11px] font-semibold text-slate-500 pt-1">Answer Key:</div>
                 <div className="flex items-center space-x-2">
                   <a
-                    href={`/api/downloads/answer-key/pdf?moduleId=${m.id}&token=${tokenParam.replace('?token=', '')}`}
+                    href={`${API_BASE_URL}/downloads/answer-key/pdf?moduleId=${m.id}&token=${tokenParam.replace('?token=', '')}`}
                     download
                     className="flex-1 text-center bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold py-1.5 rounded transition"
                   >
                     PDF Solutions
                   </a>
                   <a
-                    href={`/api/downloads/answer-key/docx?moduleId=${m.id}&token=${tokenParam.replace('?token=', '')}`}
+                    href={`${API_BASE_URL}/downloads/answer-key/docx?moduleId=${m.id}&token=${tokenParam.replace('?token=', '')}`}
                     download
                     className="flex-1 text-center border border-emerald-300 hover:bg-emerald-50 text-emerald-800 text-[11px] font-semibold py-1.5 rounded transition"
                   >
