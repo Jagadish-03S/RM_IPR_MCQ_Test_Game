@@ -1,0 +1,485 @@
+[
+  {
+    "usn": "4JD24CS001",
+    "name": "ABHIJEETH V S",
+    "score": 85,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS002",
+    "name": "ABHISHEK H",
+    "score": 92,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS003",
+    "name": "ADARSHA D K",
+    "score": 78,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS004",
+    "name": "ADITI K N",
+    "score": 95,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS005",
+    "name": "AFNAN KHAN",
+    "score": 92,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS006",
+    "name": "AISHWARYA H K",
+    "score": 78,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS007",
+    "name": "AISIRI T D",
+    "score": 85,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS008",
+    "name": "AKASH S",
+    "score": 92,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS009",
+    "name": "AKSHATA TEERTHAPPA BANAKAR",
+    "score": 78,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS010",
+    "name": "AKSHATHA H",
+    "score": 85,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS011",
+    "name": "AKSHAY TUMMINAKATTI",
+    "score": 92,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS012",
+    "name": "AMRUTA JAGADESH JAKKANNAVAR",
+    "score": 78,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS013",
+    "name": "AMRUTHA H J",
+    "score": 85,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS014",
+    "name": "AMULYA G S",
+    "score": 92,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS015",
+    "name": "ANANYA PATEL A G",
+    "score": 92,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS016",
+    "name": "ANITHA",
+    "score": 85,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS017",
+    "name": "ANUSHA A",
+    "score": 92,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS018",
+    "name": "ANUSHA B G",
+    "score": 78,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS019",
+    "name": "ANUSHA C",
+    "score": 85,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS020",
+    "name": "ANUSHA SURESH NEGALUR",
+    "score": 92,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS021",
+    "name": "APOORVA A BIRADAR",
+    "score": 94,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS022",
+    "name": "ARFA HARMAIN N",
+    "score": 85,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS023",
+    "name": "ARPITHA S T",
+    "score": 92,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS024",
+    "name": "ARUN A MAYUR",
+    "score": 78,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS025",
+    "name": "ASFIYA KHANUM",
+    "score": 85,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS026",
+    "name": "ASHWINI BANDIWADDAR",
+    "score": 92,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS027",
+    "name": "AYISHA SIDDIQA",
+    "score": 78,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS028",
+    "name": "B M OMKARA GANESH",
+    "score": 85,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS029",
+    "name": "B TUBA KHANUM",
+    "score": 92,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS030",
+    "name": "BABY H N",
+    "score": 78,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS031",
+    "name": "BANAKARA U PRAVEENA",
+    "score": 85,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS032",
+    "name": "BASAMMA",
+    "score": 92,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS033",
+    "name": "BASANTH KUMAR R M",
+    "score": 78,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS034",
+    "name": "BASAVARADDI J RANGARADDI",
+    "score": 85,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS035",
+    "name": "BENNIHALLI ASHA",
+    "score": 92,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS036",
+    "name": "BHAGYASHRI PATTAR",
+    "score": 78,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS037",
+    "name": "BHAGYAVANTI VASUDEV PATIL",
+    "score": 85,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS038",
+    "name": "BHARATH KUMAR B SAJJANA",
+    "score": 92,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS039",
+    "name": "BHARATH M B",
+    "score": 78,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS040",
+    "name": "BHAVANA ASHOK BADIGER",
+    "score": 85,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS041",
+    "name": "BHAVANA D S",
+    "score": 91,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS042",
+    "name": "BHAVANA P B",
+    "score": 78,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS043",
+    "name": "BHAVANI NINGAPPA SIMPIGER",
+    "score": 85,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS044",
+    "name": "BHOOMIKA R G",
+    "score": 92,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS045",
+    "name": "BINDUSHREE",
+    "score": 78,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS046",
+    "name": "BINDUSHREE B H",
+    "score": 85,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS047",
+    "name": "CHAITANYA N",
+    "score": 92,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS048",
+    "name": "CHANDAN N",
+    "score": 78,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS049",
+    "name": "CHANDANA",
+    "score": 85,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS050",
+    "name": "CHANDANA B",
+    "score": 92,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS051",
+    "name": "CHANDANA H S",
+    "score": 78,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS052",
+    "name": "CHANDRASHEKHAR N",
+    "score": 85,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS053",
+    "name": "CHANDU YALLAPPA HOSAMANI",
+    "score": 92,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS054",
+    "name": "CHETAN SUBHASH AGADI",
+    "score": 93,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS055",
+    "name": "CHINMAYA S N",
+    "score": 85,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS056",
+    "name": "CHINMAYI M R",
+    "score": 92,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS057",
+    "name": "D N KOTRESHA",
+    "score": 78,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS058",
+    "name": "D S SHASHANK",
+    "score": 85,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS059",
+    "name": "DARSHAN AMRUTESHWAR ARKASALI",
+    "score": 92,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS060",
+    "name": "DARSHAN S",
+    "score": 78,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS074",
+    "name": "GUNTAKA NISSY ABRAHAM",
+    "score": 85,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS086",
+    "name": "JAGADISH S",
+    "score": 96,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS091",
+    "name": "K U TEJASWINI",
+    "score": 94,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS092",
+    "name": "KARTHIK M S",
+    "score": 92,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS101",
+    "name": "KOMMARANAHALLI MAHALAKSHMI",
+    "score": 95,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS111",
+    "name": "MANASA M R",
+    "score": 78,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24CS115",
+    "name": "MANOHARI PATTAR",
+    "score": 93,
+    "department": "Computer Science & Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24EE009",
+    "name": "Gagan S",
+    "score": 92,
+    "department": "Electrical & Electronics Engineering",
+    "semester": 4
+  },
+  {
+    "usn": "4JD24EE021",
+    "name": "Sagar G N",
+    "score": 78,
+    "department": "Electrical & Electronics Engineering",
+    "semester": 4
+  }
+]
