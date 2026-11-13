@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
 import path from 'path';
+import { ensureStudentsSeeded } from './seedStudents';
 
 dotenv.config({ path: path.join(__dirname, '..', '.env') });
 
@@ -62,6 +63,9 @@ export async function seedDatabase() {
     }
   });
   console.log(`Administrator account configured: ${admin.email}`);
+  // 3. Ensure student test attempts and records are populated
+  await ensureStudentsSeeded(prisma);
+
   console.log('Database seeding successfully finished.');
 }
 
