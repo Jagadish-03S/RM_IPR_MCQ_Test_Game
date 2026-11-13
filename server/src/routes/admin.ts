@@ -70,6 +70,7 @@ adminRouter.get('/dashboard', verifyAdminToken, async (req: AuthenticatedAdminRe
     const totalAttempts = await prisma.testAttempt.count();
     const completedAttempts = await prisma.testAttempt.count({ where: { status: 'COMPLETED' } });
     const inProgressAttempts = await prisma.testAttempt.count({ where: { status: 'IN_PROGRESS' } });
+    const disqualifiedAttempts = await prisma.testAttempt.count({ where: { status: 'DISQUALIFIED' } });
 
     // Aggregate statistics for completed attempts
     const completedList = await prisma.testAttempt.findMany({
@@ -122,6 +123,7 @@ adminRouter.get('/dashboard', verifyAdminToken, async (req: AuthenticatedAdminRe
         totalAttempts,
         completedAttempts,
         inProgressAttempts,
+        disqualifiedAttempts,
         averageScore,
         highestScore,
         lowestScore,

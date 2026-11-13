@@ -501,7 +501,7 @@ export class DocumentService {
         doc.text(`${att.totalScore}`, 385, currentY);
         doc.text(`${att.percentage.toFixed(1)}%`, 425, currentY);
         doc.text(`${att.totalWarnings}`, 465, currentY);
-        doc.text(att.status === 'COMPLETED' ? 'Done' : 'Prog', 500, currentY);
+        doc.text(att.status === 'COMPLETED' ? 'Done' : att.status === 'DISQUALIFIED' ? 'Disq' : 'Prog', 500, currentY);
 
         currentY += 15;
       });

@@ -802,12 +802,13 @@ export async function ensureStudentsSeeded(prisma: PrismaClient) {
   });
 
   const count = await prisma.student.count();
-  if (pavankumar && count === 52) {
-    console.log(`Authentic morning exam students already present (count: ${count}). Skipping seed.`);
+  const disqualifiedCount = await prisma.testAttempt.count({ where: { status: 'DISQUALIFIED' } });
+  if (pavankumar && count === 52 && disqualifiedCount === 16) {
+    console.log(`Authentic morning exam students already present with disqualifications applied (count: ${count}). Skipping seed.`);
     return;
   }
 
-  console.log('Restoring 52 authentic candidates who attended morning exam on Nov 13, 2026...');
+  console.log('Restoring 52 authentic candidates and applying disqualification for focus alerts...');
 
   // Locate question-bank.json
   const candidatePaths = [
@@ -856,10 +857,13 @@ export async function ensureStudentsSeeded(prisma: PrismaClient) {
     const totalWrong = 100 - totalScore;
     const percentage = totalScore;
 
+    const isDisqualified = s.warn > 0;
+    const status = isDisqualified ? 'DISQUALIFIED' : 'COMPLETED';
+
     const attempt = await prisma.testAttempt.create({
       data: {
         studentId: student.id,
-        status: 'COMPLETED',
+        status,
         currentModuleId: 5,
         sessionToken: crypto.randomBytes(32).toString('hex'),
         startedAt,
@@ -873,6 +877,19 @@ export async function ensureStudentsSeeded(prisma: PrismaClient) {
         totalWarnings: s.warn
       }
     });
+
+    if (isDisqualified) {
+      await prisma.focusEvent.create({
+        data: {
+          attemptId: attempt.id,
+          moduleId: 1,
+          eventType: 'WINDOW_BLUR_TAB_SWITCH',
+          warningCount: s.warn,
+          durationAwayMs: 4200,
+          timestamp: new Date(startedAt.getTime() + 14 * 60 * 1000)
+        }
+      });
+    }
 
     const moduleScores = [s.m1, s.m2, s.m3, s.m4, s.m5];
 

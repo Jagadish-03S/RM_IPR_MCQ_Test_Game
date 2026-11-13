@@ -282,12 +282,12 @@ export const AdminDashboard: React.FC = () => {
             <div className="text-[11px] text-emerald-500 mt-0.5">all 5 modules done</div>
           </div>
 
-          <div className="bg-white rounded-2xl p-4 border border-amber-100 shadow-sm">
-            <div className="text-xs font-semibold text-amber-600 uppercase">In Progress</div>
-            <div className="text-2xl font-black text-amber-700 mt-1">
-              {overview.inProgressAttempts}
+          <div className="bg-white rounded-2xl p-4 border border-rose-200 shadow-sm">
+            <div className="text-xs font-semibold text-rose-600 uppercase">Disqualified</div>
+            <div className="text-2xl font-black text-rose-700 mt-1">
+              {(overview as any).disqualifiedAttempts ?? 0}
             </div>
-            <div className="text-[11px] text-amber-600 mt-0.5">active tests</div>
+            <div className="text-[11px] text-rose-500 mt-0.5">tab switch violations</div>
           </div>
 
           <div className="bg-white rounded-2xl p-4 border border-indigo-100 shadow-sm">
@@ -332,6 +332,7 @@ export const AdminDashboard: React.FC = () => {
               >
                 <option value="ALL">All Statuses</option>
                 <option value="COMPLETED">Completed</option>
+                <option value="DISQUALIFIED">Disqualified</option>
                 <option value="IN_PROGRESS">In Progress</option>
               </select>
 
@@ -393,10 +394,16 @@ export const AdminDashboard: React.FC = () => {
                             className={`px-2 py-0.5 rounded text-[11px] font-bold ${
                               att.status === 'COMPLETED'
                                 ? 'bg-emerald-100 text-emerald-800'
+                                : att.status === 'DISQUALIFIED'
+                                ? 'bg-rose-100 text-rose-800'
                                 : 'bg-amber-100 text-amber-800'
                             }`}
                           >
-                            {att.status === 'COMPLETED' ? 'Completed' : 'In Progress'}
+                            {att.status === 'COMPLETED'
+                              ? 'Completed'
+                              : att.status === 'DISQUALIFIED'
+                              ? 'Disqualified'
+                              : 'In Progress'}
                           </span>
                         </td>
                         {modScores.map((score, i) => (
